@@ -1,0 +1,61 @@
+.MentorList {
+    background-image: linear-gradient(to bottom, #706da1, #3702ca);
+    border-radius: 40px;
+    padding: 60px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    height: 500px; 
+    width: 800px;
+    overflow-y: scroll; 
+}
+
+.MentorList::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.MentorList::-webkit-scrollbar-thumb {
+    background-color: rgba(52, 30, 129, 0);
+    border-radius: 4px;
+    height: 30px;
+}
+
+.MentorList::-webkit-scrollbar-track {
+    opacity: 0;
+}
+
+
+.MentorList h2 {
+    color: #f8f8f8;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    line-height: 0px;
+    margin-bottom: 50px;
+}
+
+.Mentor {
+    display: flex;
+    align-items: center;
+    margin-bottom: 40px;
+    border-bottom: 1px solid #dadada5d;
+}
+
+.Mentor .info {
+
+    display: flex;
+    align-items: center;
+    color: #f8f8f8;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    margin-bottom: 20px;
+
+}
+
+.Mentor .info span {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.MentorList p {
+    margin: 0;
+}
+
+

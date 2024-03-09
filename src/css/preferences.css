@@ -1,0 +1,36 @@
+.preference-showcase button {
+    background-color: #4a71f1;
+    border-radius: 25px;
+    border: none;
+    color: #f8f8f8;
+    padding: 15px 32px;
+    text-align: center;
+    display: inline-block;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    gap: 10px;
+    margin-left: 950px;
+    top: 500px;
+}
+
+.loaded-preference {
+    margin-top: 10px;
+    color: #f8f8f8;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.preference-display {
+    border: 1px solid #00000073;
+    background-color: #00000036;
+    padding: 10px;
+    margin-top: 10px;
+    max-width: 400px;
+    align-items: center;
+    margin-left: 860px;
+}

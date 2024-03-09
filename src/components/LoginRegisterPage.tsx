@@ -35,17 +35,9 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
     setLoginPassword(value);
   };
 
+  //LOGIN LOGIC
   const handleLoginClick = () => {
-    //LOGIN LOGIC
     console.log("login SUIIIIIIIIi");
-
-    //create the url string
-    let loginJSON = [
-      {
-        email: loginEmail,
-        password: loginPassword,
-      },
-    ];
 
     //set the url
     let url = "https://" + serverAddress + ":" + serverPort + "/login";
@@ -55,15 +47,10 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
     var xhr = new XMLHttpRequest();
     xhr.responseType = "json";
     xhr.open("POST", url, true);
-    xhr.setRequestHeader("Content-Type", "application/json");
-
-    //create array for storing the server;s response
-    let userDetails: string[];
+    xhr.setRequestHeader("Content-Type", "application/json"); // '; charset=utf-8' add later
 
     //resolve the server's response
     xhr.onload = () => {
-      userDetails = xhr.responseText.split(",");
-
       //if login successful
       if (xhr.status == 200) {
         //parse the response into a json format
@@ -73,6 +60,9 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
           name: jsonResponse[0].name,
           password: jsonResponse[0].password,
         });
+
+        console.log(jsonResponse.stringify());
+        console.log(jsonResponse);
 
         if (setIsLoggedIn) {
           //call login function from the main app
@@ -89,7 +79,15 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
         console.log("incorrect login or password");
       }
     };
-    xhr.send(JSON.stringify(loginJSON));
+
+    //create the url string
+    let loginJSON = {
+      email: loginEmail,
+      password: loginPassword,
+    };
+    let jsonPayload = JSON.stringify(loginJSON);
+    console.log(jsonPayload);
+    xhr.send(jsonPayload);
   };
 
   const handleRegisterFormClick = () => {
