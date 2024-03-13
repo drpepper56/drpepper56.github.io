@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 interface triggerTextBoxItems {
   value: string;
   label: string;

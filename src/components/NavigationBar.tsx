@@ -21,7 +21,7 @@ const NavigationBar: React.FC<NavigationBarItems> = ({
 }) => {
   const [dropdown, setDropdown] = useState(false);
   const dropdownExit = useRef<HTMLUListElement>(null);
-  const [timer, setTimer] = useState<number | undefined>(undefined);
+  const [timer] = useState<number | undefined>(undefined);
 
   const handleWebpageChange = (newWebpage: string) => {
     pageNavigation(newWebpage);
@@ -35,7 +35,6 @@ const NavigationBar: React.FC<NavigationBarItems> = ({
       }
     } else {
       // Set a timeout to hide the dropdown box after an amount of time
-      let timer1 = setTimeout(() => setDropdown(false), 5000);
     }
   };
 
