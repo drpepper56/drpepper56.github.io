@@ -8,8 +8,7 @@ import NavigationBar from "./components/NavigationBar";
   replace with proper http later
 */
 const server_port = 5000;
-const server_address =
-  "https://floating-island-38755-1b0593cccb18.herokuapp.com";
+const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com";
 
 export interface User {
   name: string;
