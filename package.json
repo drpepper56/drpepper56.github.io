@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.1",
   "type": "module",
-  "homepage": "chefsoul.uk",
+  "homepage": "https://chefsoul.uk",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
