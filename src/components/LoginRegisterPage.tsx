@@ -39,8 +39,12 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   const handleLoginClick = () => {
     console.log("login SUIIIIIIIIi");
 
-    //set the url
-    let url = "https://" + serverAddress /* + ":" + serverPort */ + "/login";
+    //set the url, if the port is localhost (e.g. server is run in a local environment for testing purposes) use the port
+    if ((serverAddress = "localhost")) {
+      var url = "https://" + serverAddress + ":" + serverPort + "/login";
+    } else {
+      var url = "https://" + serverAddress /* + ":" + serverPort */ + "/login";
+    }
     // PORT or NO PORT
     console.log(url);
 
