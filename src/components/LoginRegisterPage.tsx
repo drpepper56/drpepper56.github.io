@@ -40,7 +40,8 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
     console.log("login SUIIIIIIIIi");
 
     //set the url
-    let url = "https://" + serverAddress + ":" + serverPort + "/login";
+    let url = "https://" + serverAddress /* + ":" + serverPort */ + "/login";
+    // PORT or NO PORT
     console.log(url);
 
     //create http request object and set it's parameters
