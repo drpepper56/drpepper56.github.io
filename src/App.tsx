@@ -18,7 +18,6 @@ const server_address = "127.0.0.1";
 export interface User {
   name: string;
   email: string;
-  password: string;
 }
 
 const App: React.FC = () => {
