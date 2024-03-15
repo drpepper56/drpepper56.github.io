@@ -1,7 +1,6 @@
 import "./css/pages.css";
 import { useState } from "react";
 import LoginRegisterPage from "./components/LoginRegisterPage";
-import NavigationBar from "./components/NavigationBar";
 import ProfileCircle from "./components/ProfileCircle";
 
 /*
@@ -58,14 +57,6 @@ const App: React.FC = () => {
         loginStatus={isLoggedIn}
         logoutFunction={handleLogoutClick}
         pageNavigation={pageNavigation}
-      />
-      <NavigationBar
-        currentPage={currentPage}
-        onLoginClick={handleLoginClick}
-        isLoggedIn={isLoggedIn}
-        onLogoutClick={handleLogoutClick}
-        pageNavigation={pageNavigation}
-        user={user}
       />
 
       {!isLoggedIn && currentPage == "Login/Register" && (

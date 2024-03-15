@@ -38,8 +38,6 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
 
   //LOGIN LOGIC
   const handleLoginClick = () => {
-    console.log("login SUIIIIIIIIi");
-
     //set the url, if the port is localhost or 127.0.0.1 (e.g. server is run in a local environment for testing purposes) use the port
     if (serverAddress == "127.0.0.1") {
       var url = "http://" + serverAddress + ":" + serverPort + "/login";
@@ -122,8 +120,6 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   };
 
   const handleRegisterClick = () => {
-    console.log("register SUIIIIIIIIi");
-
     if (!/\S+@\S+\.\S+/.test(registerEmail)) {
       setRegisterErrorMessage("Please enter a valid email address.");
       return;

@@ -17,6 +17,7 @@ const ProfileCircle: React.FC<ProfileCircleItems> = ({
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleToggleUserMenu = () => {
+    console.log(showUserMenu);
     if (showUserMenu) {
       setShowUserMenu(false);
     } else {
@@ -28,34 +29,24 @@ const ProfileCircle: React.FC<ProfileCircleItems> = ({
     logoutFunction();
   };
 
+  const handleLoginPageNav = () => {
+    pageNavigation("Login/Register");
+  };
+
   return (
     <div className="container">
       <div className="circle" onClick={handleToggleUserMenu}>
         <span className="letter">{letter}</span>
       </div>
       {showUserMenu && (
-        <div className="dropdown-menu">
+        <div className="dropdown-menu" onClick={handleToggleUserMenu}>
           <ul>
             <li>placeholder1</li>
 
             {loginStatus ? (
-              <li
-                onClick={() => {
-                  handleToggleUserMenu;
-                  handleLogoutUser;
-                }}
-              >
-                Logout
-              </li>
+              <li onClick={handleLogoutUser}>Logout</li>
             ) : (
-              <li
-                onClick={() => {
-                  handleToggleUserMenu;
-                  pageNavigation("Login");
-                }}
-              >
-                Login
-              </li>
+              <li onClick={handleLoginPageNav}>Login</li>
             )}
           </ul>
         </div>
