@@ -42,7 +42,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
 
     //set the url, if the port is localhost or 127.0.0.1 (e.g. server is run in a local environment for testing purposes) use the port
     if (serverAddress == "127.0.0.1") {
-      var url = "https://" + serverAddress + ":" + serverPort + "/login";
+      var url = "http://" + serverAddress + ":" + serverPort + "/login";
     } else {
       var url = "https://" + serverAddress /* + ":" + serverPort */ + "/login";
     }
@@ -59,17 +59,9 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
     xhr.onload = () => {
       //if login successful
       //FOR TESTING: assume true
-      if (xhr.status == 200 || true /*HERE*/) {
-        //parse the response into a json format
-        var jsonResponse = JSON.parse(xhr.responseText);
-        loginSuccess({
-          email: jsonResponse[0].email,
-          name: jsonResponse[0].name,
-          password: jsonResponse[0].password,
-        });
-
-        console.log(jsonResponse.stringify());
-        console.log(jsonResponse);
+      if (xhr.status == 200) {
+        //the response should come in a json so just save it as local variable
+        let data = xhr.response;
 
         if (setIsLoggedIn) {
           //call login function from the main app
@@ -80,6 +72,11 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
           //perform the routine to do upon a user'g login
           onLogin();
         }
+
+        loginSuccess({
+          name: data["username"],
+          email: data["email"],
+        });
       } /* else {
         //TODO: fix later add proper error handling
         setLoginErrorMessage("incorrect login");

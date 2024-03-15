@@ -51,8 +51,14 @@ const App: React.FC = () => {
     <div className="App">
       {/*set the letter to ? if there is no user*/}
       <ProfileCircle
-        letter={isLoggedIn && user != null ? user.name.substring(1) : "?"}
+        letter={
+          isLoggedIn && user != null
+            ? user.name.substring(0, 1).toUpperCase()
+            : "?"
+        }
         loginStatus={isLoggedIn}
+        logoutFunction={handleLogoutClick}
+        pageNavigation={pageNavigation}
       />
       <NavigationBar
         currentPage={currentPage}
