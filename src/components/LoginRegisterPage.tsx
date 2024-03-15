@@ -26,7 +26,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   //Login parts
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-  const [loginErrorMessage, setLoginErrorMessage] = useState("");
+  const [loginErrorMessage] = useState("");
 
   const handleLoginEmailChange = (value: string) => {
     setLoginEmail(value);
@@ -149,9 +149,8 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
 
     // Assuming validation passes
     loginSuccess({
-      email: registerEmail,
       name: registerName,
-      password: registerPassword,
+      email: registerEmail,
     });
   };
 
