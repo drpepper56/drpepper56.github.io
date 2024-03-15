@@ -1,0 +1,23 @@
+.container {
+    position: relative;
+    font-family: system-ui;
+    color: #000000; /* Adjust color as needed */
+  }
+  
+  .circle {
+    position: absolute;
+    top: 20px; /* Adjust as needed */
+    right: 20px; /* Adjust as needed */
+    width: 40px; /* Adjust as needed */
+    height: 40px; /* Adjust as needed */
+    background-color: #ffffff; /* Adjust color as needed */
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .letter {
+    font-size: 24px; /* Adjust font size as needed */
+  }
+  

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { User } from "../App";
 import Button from "./Button";
+import "../css/login.css";
 import TriggerTextBox from "./TriggerTextBox";
 
 interface LoginItems {
@@ -39,8 +40,8 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   const handleLoginClick = () => {
     console.log("login SUIIIIIIIIi");
 
-    //set the url, if the port is localhost (e.g. server is run in a local environment for testing purposes) use the port
-    if ((serverAddress = "localhost")) {
+    //set the url, if the port is localhost or 127.0.0.1 (e.g. server is run in a local environment for testing purposes) use the port
+    if (serverAddress == "127.0.0.1") {
       var url = "https://" + serverAddress + ":" + serverPort + "/login";
     } else {
       var url = "https://" + serverAddress /* + ":" + serverPort */ + "/login";
@@ -57,7 +58,8 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
     //resolve the server's response
     xhr.onload = () => {
       //if login successful
-      if (xhr.status == 200) {
+      //FOR TESTING: assume true
+      if (xhr.status == 200 || true /*HERE*/) {
         //parse the response into a json format
         var jsonResponse = JSON.parse(xhr.responseText);
         loginSuccess({
@@ -78,11 +80,11 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
           //perform the routine to do upon a user'g login
           onLogin();
         }
-      } else {
+      } /* else {
         //TODO: fix later add proper error handling
         setLoginErrorMessage("incorrect login");
         console.log("incorrect login or password");
-      }
+      } */
     };
 
     //create the url string
@@ -161,9 +163,9 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   };
 
   return (
-    <div className="loginORregister-container">
+    <div className="login-container">
       {showRegister ? (
-        <div className="register-container">
+        <div>
           <TriggerTextBox
             label="Name"
             value={registerName}
@@ -193,7 +195,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
           <Button label="Login" onClick={handleRegisterFormCancel} />
         </div>
       ) : (
-        <div className="login-container">
+        <div>
           <TriggerTextBox
             label="Email"
             value={loginEmail}
