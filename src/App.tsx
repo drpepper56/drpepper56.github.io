@@ -12,8 +12,8 @@ import ProfileCircle from "./components/ProfileCircle";
 */
 
 const server_port = 5000;
-// const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com";
-const server_address = "127.0.0.1";
+const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com";
+// const server_address = "127.0.0.1";
 
 export interface User {
   name: string;
