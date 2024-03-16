@@ -28,6 +28,7 @@
     top: 70px; /* Adjust as needed */
     right: 10px; /* Adjust as needed */
     width: fit-content;
+    min-width: 80px;
     background-color: #ffffff;
     border: 1px solid #000000;
     border-radius: 5px;
@@ -51,4 +52,3 @@
     width: fit-content;
     padding: 5px 0;
   }
-  

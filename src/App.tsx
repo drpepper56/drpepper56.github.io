@@ -3,6 +3,11 @@ import { useState } from "react";
 import LoginRegisterPage from "./components/LoginRegisterPage";
 import ProfileCircle from "./components/ProfileCircle";
 
+export enum PageMode {
+  "LoginRegister",
+  "Home",
+}
+
 /*
   Server connectivity,
   replace with proper http later
@@ -11,8 +16,8 @@ import ProfileCircle from "./components/ProfileCircle";
 */
 
 const server_port = 5000;
-const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com";
-// const server_address = "127.0.0.1";
+// const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com";
+const server_address = "127.0.0.1";
 
 export interface User {
   name: string;
@@ -20,54 +25,71 @@ export interface User {
 }
 
 const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState("Home");
+  const [currentPageMode, setCurrentPageMode] = useState(PageMode.Home);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [showLeftSideMenu, setShowLeftSideMenu] = useState(true);
 
+  //for login
   const handleLoginClick = () => {
-    setCurrentPage("Login/Register");
+    setCurrentPageMode(PageMode.LoginRegister);
   };
 
+  //for setting user after login
   const handleLoginSuccess = (user: User) => {
     setUser(user);
     setIsLoggedIn(true);
-    setCurrentPage("Home");
+    setCurrentPageMode(PageMode.Home);
   };
 
+  //for logout
   const handleLogoutClick = () => {
     setUser(null);
     setIsLoggedIn(false);
-    setCurrentPage("Login");
+    setCurrentPageMode(PageMode.LoginRegister);
   };
 
-  //method to pass to navigation bar component that let's it change the current page
-  const pageNavigation = (webpage: string) => {
-    setCurrentPage(webpage);
+  //method to pass to elements that need to change the mode of the page
+  const triggerPageModeChange = (pageMode: PageMode) => {
+    setCurrentPageMode(pageMode);
+  };
+
+  //method for toggling the left side menu
+  const handleLeftMenuToggle = () => {
+    setShowLeftSideMenu(!showLeftSideMenu);
   };
 
   return (
     <div className="App">
-      {/*set the letter to ? if there is no user*/}
-      <ProfileCircle
-        letter={
-          isLoggedIn && user != null
-            ? user.name.substring(0, 1).toUpperCase()
-            : "?"
-        }
-        loginStatus={isLoggedIn}
-        logoutFunction={handleLogoutClick}
-        pageNavigation={pageNavigation}
-      />
+      <div className="full-page">
+        <div className="container-for-recipes">
+          <p>kms</p>
+        </div>
+        <div className="container-for-right_side">
+          <div className="container-for-profile-circle">
+            <ProfileCircle
+              letter={
+                isLoggedIn && user != null
+                  ? user.name.substring(0, 1).toUpperCase()
+                  : "?"
+              }
+              loginStatus={isLoggedIn}
+              logoutFunction={handleLogoutClick}
+              pageNavigation={triggerPageModeChange}
+            />
+          </div>
 
-      {!isLoggedIn && currentPage == "Login/Register" && (
-        <LoginRegisterPage
-          serverPort={server_port}
-          serverAddress={server_address}
-          loginSuccess={handleLoginSuccess}
-          setIsLoggedIn={setIsLoggedIn}
-          onLogin={handleLoginClick}
-        />
-      )}
+          {!isLoggedIn && currentPageMode == PageMode.LoginRegister && (
+            <LoginRegisterPage
+              serverPort={server_port}
+              serverAddress={server_address}
+              loginSuccess={handleLoginSuccess}
+              setIsLoggedIn={setIsLoggedIn}
+              onLogin={handleLoginClick}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 };

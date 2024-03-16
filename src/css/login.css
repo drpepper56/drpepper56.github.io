@@ -1,55 +1,64 @@
-body { 
-    background-image: linear-gradient(to bottom, #d3d4e0, #5a52ad);
-    position: relative;
-
-}
-
 .login-container {
-    background-image: linear-gradient(to bottom, #706da1, #3702ca);
-    border: 4px solid #514a9e;
-    border-radius: 60px;
-    padding: 80px;
-    margin: 20px auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 50px auto;
+    padding: 20px;
     max-width: 400px;
-    margin-top: 150px;
-    align-items: center;
-}
-
-.login-container input[type="text"],
-.login-container input[type="password"]
- {
-    color: #ffffff;
-    border: 2px solid #ffffff;
-    background-color: #37356d00;
-    border-radius: 50px;
-    padding: 10px;
-    margin-bottom: 10px;
-    width: 100%;
-    font-size: 16px;
-}
-
-
-.login-container .error {
-    color: #f00;
-    margin-bottom: 10px;
-}
-
-.login-container button {
-    border: none;
-    color: #fff;
-    border-radius: 5px;
-    padding: 10px;
-    margin-top: 10px;
-    margin-right: 10px;
-    width: 100px;
-    cursor: pointer;
-}
-
-.login-container button:hover {
-    background-color: #424ce0;
-}
-
-.login-container label {
-    color: #ffffff;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #c6c6c6; /* Light gray-blue background */
+    border-radius: 10px; /* Smooth edges */
+    text-align: center; /* Center the whole form */
+    font-family: 'Roboto', sans-serif; /* Use Roboto font */
   }
+  
+  
+  .login-container .error {
+    color: #ff0000;
+    margin-bottom: 10px;
+  }
+  
+  .login-container label {
+    font-weight: normal;
+    margin-bottom: 5px; /* Add margin between label and textbox */
+    display: inline-block;
+    width: 150px; /* Width of the labels */
+    text-align: left; /* Align labels to the left */
+  }
+  
+  .login-container .btn {
+    margin-top: 10px;
+    margin-left: 4px;
+    background-color: #000; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .login-container .btn:hover {
+    background-color: #333; /* Darker background color on hover */
+  }
+  
+  .login-container input[type="text"],
+  .login-container input[type="email"],
+  .login-container input[type="password"] {
+    width: calc(100% - 120px); /* Adjusted width for input boxes */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none; /* Remove border */
+    border-radius: 5px;
+    vertical-align: middle; /* Align input boxes vertically */
+  }
+  
+  .login-container input[type="text"]:focus,
+  .login-container input[type="email"]:focus,
+  .login-container input[type="password"]:focus {
+    outline: none;
+  }
+  
+  .login-container > div {
+    margin-bottom: 10px; /* Add margin between input boxes and buttons */
+  }
+  

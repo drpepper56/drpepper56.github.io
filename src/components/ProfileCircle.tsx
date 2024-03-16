@@ -1,11 +1,12 @@
 import "../css/profile_circle.css";
 import { useState } from "react";
+import { PageMode } from "../App";
 
 interface ProfileCircleItems {
   letter: string;
   loginStatus: boolean;
   logoutFunction: () => void;
-  pageNavigation: (webpage: string) => void;
+  pageNavigation: (pageMode: PageMode) => void;
 }
 
 const ProfileCircle: React.FC<ProfileCircleItems> = ({
@@ -17,12 +18,7 @@ const ProfileCircle: React.FC<ProfileCircleItems> = ({
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const handleToggleUserMenu = () => {
-    console.log(showUserMenu);
-    if (showUserMenu) {
-      setShowUserMenu(false);
-    } else {
-      setShowUserMenu(true);
-    }
+    setShowUserMenu(!showUserMenu);
   };
 
   const handleLogoutUser = () => {
@@ -30,7 +26,7 @@ const ProfileCircle: React.FC<ProfileCircleItems> = ({
   };
 
   const handleLoginPageNav = () => {
-    pageNavigation("Login/Register");
+    pageNavigation(PageMode.LoginRegister);
   };
 
   return (
@@ -41,8 +37,6 @@ const ProfileCircle: React.FC<ProfileCircleItems> = ({
       {showUserMenu && (
         <div className="dropdown-menu" onClick={handleToggleUserMenu}>
           <ul>
-            <li>placeholder1</li>
-
             {loginStatus ? (
               <li onClick={handleLogoutUser}>Logout</li>
             ) : (

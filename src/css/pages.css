@@ -1,3 +1,20 @@
-.page-container {
-    height: 1080px;
-  }
+
+.full-page {
+  display: flex;
+}
+
+.container-for-recipes {
+  min-height: 100%;
+  min-width: 25%;
+}
+
+.container-for-right_side {
+  display: block;
+  width: 100%;
+
+}
+
+
+.container-for-profile-circle {
+  height: 65px;
+}
