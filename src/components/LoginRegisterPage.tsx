@@ -3,11 +3,13 @@ import { User } from "../App";
 import Button from "./Button";
 import "../css/login.css";
 import TriggerTextBox from "./TriggerTextBox";
+import { useOutsideClick } from "../util/useOutsideClick";
 
 interface LoginItems {
   serverPort: number;
   serverAddress: string;
   loginSuccess: (user: User) => void;
+  selfClose: () => void;
   setIsLoggedIn?: (loggedIn: boolean) => void;
   onLogin?: () => void;
   handleLogin?: () => void;
@@ -19,9 +21,13 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   loginSuccess,
   setIsLoggedIn,
   onLogin,
+  selfClose,
 }) => {
   //control Value
   const [showRegister, setRegister] = useState(false);
+  const ref1 = useOutsideClick(() => {
+    selfClose();
+  });
 
   //Login parts
   const [loginEmail, setLoginEmail] = useState("");
@@ -155,7 +161,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" ref={ref1}>
       {showRegister ? (
         <div>
           <TriggerTextBox

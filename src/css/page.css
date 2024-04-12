@@ -1,11 +1,8 @@
 
-.full-page {
+.full-page, .App {
   display: flex;
-}
-
-.container-for-recipes {
-  min-height: 100%;
-  min-width: 25%;
+  margin: 0;
+  padding: 0;
 }
 
 .container-for-right_side {
@@ -14,7 +11,10 @@
 
 }
 
-
 .container-for-profile-circle {
   height: 65px;
+}
+
+* {
+  outline: 1px solid black;
 }

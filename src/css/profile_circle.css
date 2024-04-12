@@ -25,15 +25,16 @@
   
   .dropdown-menu {
     position: absolute;
-    top: 70px; /* Adjust as needed */
-    right: 10px; /* Adjust as needed */
+    top: 70px;
+    right: 10px; 
     width: fit-content;
+  
+
     min-width: 80px;
     background-color: #ffffff;
     border: 1px solid #000000;
     border-radius: 5px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 10px;
     display: block;
   }
   
@@ -42,13 +43,21 @@
   }
   
   .dropdown-menu ul {
-    width: fit-content;
     list-style: none;
-    padding: 0;
+    padding: 1px;
     margin: 0;
   }
   
   .dropdown-menu li {
-    width: fit-content;
-    padding: 5px 0;
+    position: relative;    
+    display: block; /* Make list items behave like block elements */
+    width: 100%; /* Span the entire width of the ul */
+    padding: 7px 5px;
+    cursor: pointer; /* Indicate clickable behavior */
+    border-bottom: 1px solid #ddd; /* Add a subtle border between items */
+    box-sizing: border-box;
+  }
+
+  .dropdown-menu li:hover { /* Style for hovering over menu items */
+    background-color: #eee; /* Optional: Highlight on hover */
   }

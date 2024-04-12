@@ -1,7 +1,8 @@
-import "./css/pages.css";
+import "./css/page.css";
 import { useState } from "react";
 import LoginRegisterPage from "./components/LoginRegisterPage";
 import ProfileCircle from "./components/ProfileCircle";
+import LeftSideMenu from "./components/LeftSideMenu";
 
 export enum PageMode {
   "LoginRegister",
@@ -11,7 +12,6 @@ export enum PageMode {
 /*
   Server connectivity,
   replace with proper http later
-
   B)
 */
 
@@ -28,25 +28,26 @@ const App: React.FC = () => {
   const [currentPageMode, setCurrentPageMode] = useState(PageMode.Home);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [showLeftSideMenu, setShowLeftSideMenu] = useState(true);
 
   //for login
   const handleLoginClick = () => {
     setCurrentPageMode(PageMode.LoginRegister);
   };
-
   //for setting user after login
   const handleLoginSuccess = (user: User) => {
     setUser(user);
     setIsLoggedIn(true);
     setCurrentPageMode(PageMode.Home);
   };
-
   //for logout
   const handleLogoutClick = () => {
     setUser(null);
     setIsLoggedIn(false);
     setCurrentPageMode(PageMode.LoginRegister);
+  };
+  // for closing login from within
+  const handleLoginCloseItself = () => {
+    setCurrentPageMode(PageMode.Home);
   };
 
   //method to pass to elements that need to change the mode of the page
@@ -54,41 +55,33 @@ const App: React.FC = () => {
     setCurrentPageMode(pageMode);
   };
 
-  //method for toggling the left side menu
-  const handleLeftMenuToggle = () => {
-    setShowLeftSideMenu(!showLeftSideMenu);
-  };
-
   return (
     <div className="App">
-      <div className="full-page">
-        <div className="container-for-recipes">
-          <p>kms</p>
+      <LeftSideMenu />
+      <div className="container-for-right_side">
+        <div className="container-for-profile-circle">
+          <ProfileCircle
+            letter={
+              isLoggedIn && user != null
+                ? user.name.substring(0, 1).toUpperCase()
+                : "?"
+            }
+            loginStatus={isLoggedIn}
+            logoutFunction={handleLogoutClick}
+            pageNavigation={triggerPageModeChange}
+          />
         </div>
-        <div className="container-for-right_side">
-          <div className="container-for-profile-circle">
-            <ProfileCircle
-              letter={
-                isLoggedIn && user != null
-                  ? user.name.substring(0, 1).toUpperCase()
-                  : "?"
-              }
-              loginStatus={isLoggedIn}
-              logoutFunction={handleLogoutClick}
-              pageNavigation={triggerPageModeChange}
-            />
-          </div>
 
-          {!isLoggedIn && currentPageMode == PageMode.LoginRegister && (
-            <LoginRegisterPage
-              serverPort={server_port}
-              serverAddress={server_address}
-              loginSuccess={handleLoginSuccess}
-              setIsLoggedIn={setIsLoggedIn}
-              onLogin={handleLoginClick}
-            />
-          )}
-        </div>
+        {!isLoggedIn && currentPageMode == PageMode.LoginRegister && (
+          <LoginRegisterPage
+            serverPort={server_port}
+            serverAddress={server_address}
+            loginSuccess={handleLoginSuccess}
+            selfClose={handleLoginCloseItself}
+            setIsLoggedIn={setIsLoggedIn}
+            onLogin={handleLoginClick}
+          />
+        )}
       </div>
     </div>
   );
