@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../css/left_side_menu.css";
+import RecipeControl from "./RecipeControl";
 
 interface LeftSideMenuItems {
   placeholder?: string;
@@ -18,23 +19,18 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = (
 
   return (
     <div className="container-for-left-side">
-      {showMenu ? (
+      {showMenu && (
         <div className="menu">
-          <ul>
-            <li>opt1</li>
-            <li>opt2</li>
-            <li>skdbgsdkjgb</li>
-            <li>opt3</li>
-          </ul>
+          <div className="empty_space_in_my_head"></div>
+          <RecipeControl placeholder={"hi"} />
         </div>
-      ) : (
-        /*image, placeholder for now*/ <p
-          className="image_icon"
-          onClick={handleToggleShowMenu}
+      )}
+      <div className="image_icon" onClick={handleToggleShowMenu}>
+        <p /*image, placeholder for now, fork knife spoon three lines menu idea*/
         >
           EE
         </p>
-      )}
+      </div>
     </div>
   );
 };

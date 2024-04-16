@@ -46,11 +46,17 @@ const ProfileCircle: React.FC<ProfileCircleItems> = ({
         >
           <ul>
             {loginStatus ? (
-              <li onClick={handleLogoutUser}>Logout</li>
+              <>
+                <li>Profile</li>
+                <li>Subscription Plan</li>
+                <li onClick={handleLogoutUser}>Logout</li>
+              </>
             ) : (
-              <li onClick={handleLoginPageNav}>Login</li>
+              <>
+                <li onClick={handleLoginPageNav}>Login</li>
+                <li>Pricing</li>
+              </>
             )}
-            <li>akdhf</li>
           </ul>
         </div>
       )}

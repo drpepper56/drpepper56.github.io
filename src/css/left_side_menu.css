@@ -1,6 +1,70 @@
-.container-for-left-side {
-    min-height: 100%;
-    min-width: 20%;
-    margin:0;
-    padding:0;
+  .image_icon{
+    position: absolute;
+    top: 15px; 
+    left: 20px; 
+    width: 40px; 
+    height: 40px; 
+    background-color: #ffffff; 
+    border: 1px solid #000000;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer; 
+
+  }
+
+  .letter {
+    font-size: 24px; /* Adjust font size as needed */
+  }
+  
+  .menu {
+    height: 100%;
+    min-width: 20vw;
+
+    border-left: 1px solid gray;
+    position: relative;  
+    background-color: #ffffff;
+
+    border-right: 2px solid #000000;
+    padding-right: 2px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    display: block;
+  }
+
+  .empty_space_in_my_head{
+    margin: 0;
+    padding: 0;
+    height: 70px;
+  }
+  
+  .circle:hover .dropdown-menu {
+    display: block;
+  }
+  
+  .menu ul {
+    list-style: none;
+    padding: 1px;
+    margin: 0;
+    width: 100vw;
+    width: fit-content;
+    box-sizing: border-box;
+  }
+  
+  .menu li {
+    position: relative;    
+    display: block; /* Make list items behave like block elements */
+    width: 20vw; /* Span the entire width of the ul */
+    padding: 10px 12px;
+    cursor: pointer; /* Indicate clickable behavior */
+    border-bottom: 1px solid #ddd; /* Add a subtle border between items */
+    box-sizing: border-box;
+  }
+
+  .menu li:has(:not(p)) {
+    background-color: #eee; /* Optional: Highlight on hover */
+  }
+
+  .menu li:hover { /* Style for hovering over menu items */
+    background-color: #eee; /* Optional: Highlight on hover */
   }

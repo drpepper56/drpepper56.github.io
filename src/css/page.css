@@ -1,20 +1,35 @@
 
-.full-page, .App {
+body, html, .App {
+  height: 100%; 
+  width: 100%;  
+  margin: 0;    
+  padding: 0;   
+}
+
+.App {
+  height: 100vw;
   display: flex;
-  margin: 0;
-  padding: 0;
+  box-sizing: border-box;
+}
+
+.container-for-left-side {
+  height: 100%;
+  min-width: fit-content;
+  width: fit-content;
+  margin:0;
+  padding:0;
+  display: block;
 }
 
 .container-for-right_side {
   display: block;
   width: 100%;
-
 }
 
 .container-for-profile-circle {
   height: 65px;
 }
 
-* {
+/* * {
   outline: 1px solid black;
-}
+} */

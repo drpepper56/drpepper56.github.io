@@ -3,6 +3,7 @@ import { useState } from "react";
 import LoginRegisterPage from "./components/LoginRegisterPage";
 import ProfileCircle from "./components/ProfileCircle";
 import LeftSideMenu from "./components/LeftSideMenu";
+import BuilderContainer from "./components/BuilderContainer";
 
 export enum PageMode {
   "LoginRegister",
@@ -57,32 +58,35 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <LeftSideMenu />
-      <div className="container-for-right_side">
-        <div className="container-for-profile-circle">
-          <ProfileCircle
-            letter={
-              isLoggedIn && user != null
-                ? user.name.substring(0, 1).toUpperCase()
-                : "?"
-            }
-            loginStatus={isLoggedIn}
-            logoutFunction={handleLogoutClick}
-            pageNavigation={triggerPageModeChange}
-          />
-        </div>
-
-        {!isLoggedIn && currentPageMode == PageMode.LoginRegister && (
-          <LoginRegisterPage
-            serverPort={server_port}
-            serverAddress={server_address}
-            loginSuccess={handleLoginSuccess}
-            selfClose={handleLoginCloseItself}
-            setIsLoggedIn={setIsLoggedIn}
-            onLogin={handleLoginClick}
-          />
-        )}
-      </div>
+      {isLoggedIn ? (
+        <>
+          <LeftSideMenu />
+          <div className="container-for-right_side">
+            <div className="container-for-profile-circle">
+              <ProfileCircle
+                letter={
+                  isLoggedIn && user != null
+                    ? user.name.substring(0, 1).toUpperCase()
+                    : "?"
+                }
+                loginStatus={isLoggedIn}
+                logoutFunction={handleLogoutClick}
+                pageNavigation={triggerPageModeChange}
+              />
+            </div>
+            <BuilderContainer placeholder={"gay"} />
+          </div>
+        </>
+      ) : (
+        <LoginRegisterPage
+          serverPort={server_port}
+          serverAddress={server_address}
+          loginSuccess={handleLoginSuccess}
+          selfClose={handleLoginCloseItself}
+          setIsLoggedIn={setIsLoggedIn}
+          onLogin={handleLoginClick}
+        />
+      )}
     </div>
   );
 };
