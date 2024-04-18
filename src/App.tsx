@@ -33,6 +33,7 @@ const App: React.FC = () => {
   //for login
   const handleLoginClick = () => {
     setCurrentPageMode(PageMode.LoginRegister);
+    console.log("go to login");
   };
   //for setting user after login
   const handleLoginSuccess = (user: User) => {
@@ -49,10 +50,12 @@ const App: React.FC = () => {
   // for closing login from within
   const handleLoginCloseItself = () => {
     setCurrentPageMode(PageMode.Home);
+    console.log("go to home");
   };
   //method to pass to elements that need to change the mode of the page
   const triggerPageModeChange = (pageMode: PageMode) => {
     setCurrentPageMode(pageMode);
+    console.log(currentPageMode);
   };
 
   // create the {3} initial suggestions for the user to chose from

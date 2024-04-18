@@ -83,7 +83,7 @@ Handle the change of all input text boxes, when the last one is occupied by some
                 (index < inputs.length - 1 ||
                   (index == 1 && inputs.length !== 2)) && (
                   <>
-                    <button onClick={(e) => handleRemoveInput(index)}>X</button>
+                    <button onClick={() => handleRemoveInput(index)}>X</button>
                   </>
                 )
             }

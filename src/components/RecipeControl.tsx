@@ -166,7 +166,7 @@ Send https request to server to generate 3 initial recipes
       <li className="recipe-generate-li">
         <p>Recipe Suggestions</p>
         <button
-          onClick={(e) =>
+          onClick={() =>
             handleGenerateInitialSuggestions(promptComponentMapRef.current)
           }
         >
