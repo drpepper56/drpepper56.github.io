@@ -56,15 +56,26 @@
     display: block; /* Make list items behave like block elements */
     width: 20vw; /* Span the entire width of the ul */
     padding: 10px 12px;
-    cursor: pointer; /* Indicate clickable behavior */
-    border-bottom: 1px solid #ddd; /* Add a subtle border between items */
+    border-bottom: 1px solid #eee; /* Add a subtle border between items */
     box-sizing: border-box;
   }
+  .menu li p,button {
+    cursor: pointer; /* Indicate clickable behavior */
+  }
 
-  .menu li:has(:not(p)) {
+  .recipe-generate-li { 
+    background-color: #ffffff !important;
+  }
+  .recipe-generate-li button {
+    align-self: center;
+  }
+
+  .menu li:has(:not(p)){
     background-color: #eee; /* Optional: Highlight on hover */
   }
 
   .menu li:hover { /* Style for hovering over menu items */
     background-color: #eee; /* Optional: Highlight on hover */
   }
+
+ 
