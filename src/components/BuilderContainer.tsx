@@ -6,7 +6,7 @@ interface BuilderContainerItems {
 const BuilderContainer: React.FC<BuilderContainerItems> = ({ placeholder }) => {
   return (
     <div className="builder-container">
-      {/* <p>{placeholder.toUpperCase()}</p> */}
+      <p>{placeholder.toUpperCase()}</p>
       <div className="recipe-output-container"></div>
     </div>
   );
