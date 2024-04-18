@@ -69,7 +69,7 @@ const App: React.FC = () => {
       Compose the message to the server
       Set the url, if the port is localhost or 127.0.0.1 (e.g. server is run in a local environment for testing purposes) use the port
     */
-      if (server_address == "127.0.0.1") {
+      if (server_address.toString() == "127.0.0.1") {
         var url =
           "http://" + server_address + ":" + server_port + "/init_suggestions";
       } else {
