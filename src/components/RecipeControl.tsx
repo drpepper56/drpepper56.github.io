@@ -36,6 +36,11 @@ interface RecipeControlItems {
   generateInitialSuggestions: (
     map: Map<string, string[]>
   ) => Promise<Map<string, string>>;
+  // FUNction to generate a full recipe, given a pre-generated suggestion and the components that went into that suggestions
+  generateFinalRecipe: (
+    componentsMap: Map<string, string[]>,
+    recipeDescription: string
+  ) => Promise<Map<string, string>>;
 }
 
 const RecipeControl: React.FC<RecipeControlItems> = ({
@@ -43,15 +48,20 @@ const RecipeControl: React.FC<RecipeControlItems> = ({
   passedGeneratedRecipesMap,
   returnRefObjects,
   generateInitialSuggestions,
+  generateFinalRecipe,
 }) => {
   //store the prompt components locally as a ref to not rerender everything
-  let promptComponentMapRef = useRef(passedPromptComponentsMap);
-  let generatedSuggestionsMapRef = useRef(passedGeneratedRecipesMap);
+  const promptComponentMapRef = useRef(passedPromptComponentsMap);
+  const recipeSuggestionsMapRef = useRef(passedGeneratedRecipesMap);
 
-  // values for contorting the visibility of collapsible input sections
+  // values for contorting the visibility of collapsible input and suggestion sections
   const [showIngInput, setShowIngInput] = useState(false);
   const [showStyleInput, setShowStyleInput] = useState(false);
   const [showAllergies, setShowAllergies] = useState(false);
+  const [suggestionsGenerated, setSuggestionsGenerated] = useState(false);
+  // values for displaying and updating the suggestions locally
+  const [suggestions, setSuggestion] = useState([""]);
+  const suggestionsLimit = 9;
 
   /*
 Cleanup and setup function
@@ -64,7 +74,7 @@ On unmount run the passed function the map ref the inputs
   }, [
     returnRefObjects(
       promptComponentMapRef.current,
-      generatedSuggestionsMapRef.current
+      recipeSuggestionsMapRef.current
     ),
   ]);
 
@@ -72,6 +82,7 @@ On unmount run the passed function the map ref the inputs
 Handle toggling of list items to reveal their content
 Saving their inputs and passing them when opened again
  */
+  // ing (input)
   const handleIngInputToggle = () => {
     // for dish general ingredients
     setShowIngInput(!showIngInput);
@@ -82,7 +93,7 @@ Saving their inputs and passing them when opened again
   const getIngredientsValues = () => {
     return promptComponentMapRef.current.get("ing")!;
   };
-
+  // style (input)
   const handleStyleInputToggle = () => {
     // for dish style
     setShowStyleInput(!showStyleInput);
@@ -93,7 +104,7 @@ Saving their inputs and passing them when opened again
   const getStyleValues = () => {
     return promptComponentMapRef.current.get("style")!;
   };
-
+  // allergies (input)
   const handleAllergiesToggle = () => {
     // for allergies
     setShowAllergies(!showAllergies);
@@ -104,6 +115,18 @@ Saving their inputs and passing them when opened again
   const getAllergiesValues = () => {
     return promptComponentMapRef.current.get("allergies")!;
   };
+  // suggestions (output)
+  const suggestionsGeneratedComplete = () => {
+    setSuggestionsGenerated(true);
+    // add the new suggestions in front of the old ones
+    setSuggestion(
+      [...recipeSuggestionsMapRef.current.values()].concat(suggestions)
+    );
+    console.info(suggestions);
+  };
+  const clearSuggestions = () => {
+    setSuggestion([""]);
+  };
 
   /*
 Handle generating @{3} initial recipe suggestions
@@ -112,17 +135,38 @@ Send https request to server to generate 3 initial recipes
   const handleGenerateInitialSuggestions = (
     promptComponents: Map<string, string[]>
   ) => {
-    // call the function that connects to the server
-    generateInitialSuggestions(promptComponents)
-      .then((map) => {
-        console.log("in recipe control 1: ", map);
-      })
-      .catch(() => {
-        console.log("error");
-      });
+    // suggestions limit check
+    if (!(suggestions.length >= suggestionsLimit)) {
+      // call the function that connects to the server
+      generateInitialSuggestions(promptComponents)
+        .then((raw_data) => {
+          //return the recipe suggestions in text form
+          recipeSuggestionsMapRef.current = new Map(Object.entries(raw_data));
+          suggestionsGeneratedComplete();
+        })
+        .catch((data) => {
+          // log the error
+          console.log("error", data);
+        });
+    }
+  };
 
-    //return the recipes in text form and display them
-    console.log("in recipe control 2: ", generatedSuggestionsMapRef.current);
+  const handleGenerateFinalRecipe = (
+    recipeComponents: Map<string, string[]>,
+    recipeDescription: string
+  ) => {
+    // call the function that connects to the server
+    generateFinalRecipe(recipeComponents, recipeDescription)
+      .then((raw_data) => {
+        //return the recipe suggestions in text form
+        // let tmp = new Map(Object.entries(raw_data));
+        console.log(raw_data);
+        setSuggestion([""]);
+      })
+      .catch((data) => {
+        // log the error
+        console.log("error", data);
+      });
   };
 
   return (
@@ -132,7 +176,7 @@ Send https request to server to generate 3 initial recipes
         {showIngInput && (
           <>
             <DynamicIngredientsInput
-              label="Ingredient"
+              label=""
               values={getIngredientsValues()}
               returnValues={handleIngredientsTabClose}
             />
@@ -152,7 +196,7 @@ Send https request to server to generate 3 initial recipes
         )}
       </li>
       <li>
-        <p onClick={handleAllergiesToggle}>Allergies</p>
+        <p onClick={handleAllergiesToggle}>Custom Allergies</p>
         {showAllergies && (
           <>
             <DynamicIngredientsInput
@@ -165,13 +209,40 @@ Send https request to server to generate 3 initial recipes
       </li>
       <li className="recipe-generate-li">
         <p>Recipe Suggestions</p>
-        <button
-          onClick={() =>
-            handleGenerateInitialSuggestions(promptComponentMapRef.current)
-          }
-        >
-          Generate
-        </button>
+        {suggestions.length < suggestionsLimit ? (
+          <button
+            onClick={() =>
+              handleGenerateInitialSuggestions(promptComponentMapRef.current)
+            }
+          >
+            Generate
+          </button>
+        ) : (
+          <button onClick={clearSuggestions}>Clear</button>
+        )}
+
+        {
+          //TODO: add some way of this <p> saving what went into making it component wise
+          suggestionsGenerated && (
+            <div className="suggestions-display">
+              <ul>
+                {suggestions.map((value, key) => (
+                  <li
+                    key={key}
+                    onClick={() =>
+                      handleGenerateFinalRecipe(
+                        promptComponentMapRef.current,
+                        value
+                      )
+                    }
+                  >
+                    {value}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
       </li>
     </ul>
   );

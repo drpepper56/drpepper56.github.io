@@ -20,7 +20,8 @@
   
   .menu {
     height: 100%;
-    min-width: 20vw;
+    min-width: 24vw;
+    max-width: 24vw;
 
     border-left: 1px solid gray;
     position: relative;  
@@ -46,21 +47,23 @@
     list-style: none;
     padding: 1px;
     margin: 0;
-    width: 100vw;
-    width: fit-content;
+    width: 100%;
+    height: 100%;
     box-sizing: border-box;
   }
   
-  .menu li {
+  .menu ul li {
     position: relative;    
     display: block; /* Make list items behave like block elements */
-    width: 20vw; /* Span the entire width of the ul */
+    width: 100%; /* Span the entire width of the ul */
     padding: 10px 12px;
-    border-bottom: 1px solid #eee; /* Add a subtle border between items */
+    border-top: 1px solid #eee; /* Add a subtle border between items */
     box-sizing: border-box;
   }
   .menu li p,button {
     cursor: pointer; /* Indicate clickable behavior */
+    margin-bottom: 6px;
+    margin-top: 6px;
   }
 
   .recipe-generate-li { 

@@ -9,14 +9,20 @@ import RecipeControl from "./RecipeControl";
 */
 
 interface LeftSideMenuItems {
-  // generate initial suggestion function implemented in App.tsx, passed down
+  // generate initial suggestion function defined in App.tsx, passed down
   generateInitialSuggestions: (
     map: Map<string, string[]>
+  ) => Promise<Map<string, string>>;
+  // generate final recipe function defined in App.tsx, passed down
+  generateFinalRecipe: (
+    componentsMap: Map<string, string[]>,
+    recipeDescription: string
   ) => Promise<Map<string, string>>;
 }
 
 const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
   generateInitialSuggestions,
+  generateFinalRecipe,
 }) => {
   // control if the menu is visible or not
   const [showMenu, setShowMenu] = useState(false);
@@ -61,6 +67,7 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
             passedPromptComponentsMap={promptComponentMapRef.current}
             returnRefObjects={handleRecipeControlClose}
             generateInitialSuggestions={generateInitialSuggestions}
+            generateFinalRecipe={generateFinalRecipe}
           />
         </div>
       )}
