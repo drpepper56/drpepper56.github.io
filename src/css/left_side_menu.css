@@ -25,7 +25,9 @@
 
     border-left: 1px solid gray;
     position: relative;  
-    background-color: #ffffff;
+    background-color: #eee; /* Optional: Highlight on hover */
+
+    /* background-color: #ffffff; */
 
     border-right: 2px solid #000000;
     padding-right: 2px;
@@ -43,42 +45,4 @@
     display: block;
   }
   
-  .menu ul {
-    list-style: none;
-    padding: 1px;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
   
-  .menu ul li {
-    position: relative;    
-    display: block; /* Make list items behave like block elements */
-    width: 100%; /* Span the entire width of the ul */
-    padding: 10px 12px;
-    border-top: 1px solid #eee; /* Add a subtle border between items */
-    box-sizing: border-box;
-  }
-  .menu li p,button {
-    cursor: pointer; /* Indicate clickable behavior */
-    margin-bottom: 6px;
-    margin-top: 6px;
-  }
-
-  .recipe-generate-li { 
-    background-color: #ffffff !important;
-  }
-  .recipe-generate-li button {
-    align-self: center;
-  }
-
-  .menu li:has(:not(p)){
-    background-color: #eee; /* Optional: Highlight on hover */
-  }
-
-  .menu li:hover { /* Style for hovering over menu items */
-    background-color: #eee; /* Optional: Highlight on hover */
-  }
-
- 

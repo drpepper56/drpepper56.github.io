@@ -6,6 +6,8 @@
 */
 import { useEffect, useRef, useState } from "react";
 import DynamicIngredientsInput from "./DynamicIngredientsInput";
+import SelectFromList from "./SelectFromList";
+import "../css/recipe_control.css";
 
 // from allergyuk.org
 export enum Allergies {
@@ -196,13 +198,16 @@ Send https request to server to generate 3 initial recipes
         )}
       </li>
       <li>
-        <p onClick={handleAllergiesToggle}>Custom Allergies</p>
+        <p onClick={handleAllergiesToggle}>Allergies</p>
         {showAllergies && (
           <>
-            <DynamicIngredientsInput
-              label="Allergy"
+            <SelectFromList
               values={getAllergiesValues()}
+              allAllergies={Object.entries(Allergies)
+                .filter((e) => !isNaN(e[0] as any))
+                .map((e) => e[1])}
               returnValues={handleAllergiesTabClose}
+              label="allergy"
             />
           </>
         )}
@@ -211,6 +216,7 @@ Send https request to server to generate 3 initial recipes
         <p>Recipe Suggestions</p>
         {suggestions.length < suggestionsLimit ? (
           <button
+            className="button-generate-suggestions"
             onClick={() =>
               handleGenerateInitialSuggestions(promptComponentMapRef.current)
             }

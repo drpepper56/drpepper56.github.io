@@ -1,0 +1,56 @@
+
+.menu ul {
+    list-style: none;
+    padding: 1px;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+  }
+  
+  .menu ul li {
+    position: relative;    
+    display: block; /* Make list items behave like block elements */
+    width: 100%; /* Span the entire width of the ul */
+    height: fit-content;
+    margin: 0;
+    padding-left: 5px;
+    /* padding: 10px 12px; */
+    border-top: 1px solid #acacac; /* Add a subtle border between items */
+    box-sizing: border-box;
+  }
+  .menu ul li p {
+    margin: 0;
+    width: 100%; /* Span the entire width of the ul */
+    padding: 15px 12px;
+  }
+  .menu ul li p :has {
+    margin: 0;
+    width: 100%; /* Span the entire width of the ul */
+    padding: 15px 12px;
+  }
+
+
+  .menu li p, .button-generate-suggestions {
+    cursor: pointer; /* Indicate clickable behavior */
+    margin-bottom: 6px;
+    margin-top: 6px;
+  }
+
+  /* .recipe-generate-li { 
+    background-color: #ffffff !important;
+  } */
+
+  .recipe-generate-li button {
+    align-self: center;
+  }
+  .dynamic_inputs_input_text {
+    margin-bottom: 3px;
+  }
+
+  /* .menu li:has(:not(p)){
+  } */
+
+  .menu li:hover { /* Style for hovering over menu items */
+    background-color: #eee; /* Optional: Highlight on hover */
+  }

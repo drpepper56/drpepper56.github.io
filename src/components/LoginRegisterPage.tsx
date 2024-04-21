@@ -51,7 +51,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
       var url = "https://" + serverAddress /* + ":" + serverPort */ + "/login";
     }
     // PORT or NO PORT
-    console.log(url);
+    // console.log(url);
 
     //create http request object and set it's parameters
     var xhr = new XMLHttpRequest();
@@ -94,7 +94,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
       password: loginPassword,
     };
     let jsonPayload = JSON.stringify(loginJSON);
-    console.log(jsonPayload);
+    // console.log(jsonPayload);
     xhr.send(jsonPayload);
   };
 

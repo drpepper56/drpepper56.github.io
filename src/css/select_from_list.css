@@ -1,0 +1,44 @@
+.select-container {
+    font-size: 14px;
+    /* font-family: 'Courier New', Courier, monospace; */
+    padding-bottom: 8px;
+}
+
+.select-container select {
+    border: none;
+    width: 100%;
+    padding: 3px;
+    background-color: inherit;
+    user-select: none;
+    outline: none;
+}
+
+.allergy-option {
+    margin: 0 !important;
+    padding: 0 !important;
+
+    display: inline;
+    width: 100%;
+    background-color: inherit;
+    outline: none;
+    border: none;
+    display: flex;
+}
+
+.option-text {
+    margin: 0 !important;
+    padding: 6px !important;
+    margin-left: 30px !important;
+    position: relative;
+    left: -10px;
+    width: fit-content;
+}
+
+.check-mark {
+    margin: 0 !important;
+    padding: 0 10px !important;
+    position: absolute;
+    transform: translateY(+36%);
+    left: 5px; /* Adjust this value as needed */
+    justify-content: center;
+}
