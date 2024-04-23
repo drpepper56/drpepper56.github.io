@@ -6,6 +6,18 @@
     padding: 0px 40px;
 }
 
+.recipe-scrollable-list {
+    overflow-y: scroll;
+    height: 50vw;
+}
+
+.recipe-paged {
+    border-style: solid;
+    border-radius: 25px;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+}
+
 .recipe-parts-list {
     list-style: none;
     padding: 1px;
@@ -69,14 +81,34 @@ margin: 0;
     padding: 2px 0px;
     margin: 0;
 }
+.recipe-list-steps .steps-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
 
 
 .recipe-list-nutrition {
     font-size: 14px;
 }
+.recipe-list-nutrition .nutrition-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.recipe-list-nutrition .nutrition {
+    margin-left: 10px;
+    padding-top: 3px;
+}
 
 
 .recipe-list-allergy  {
     font-size: 14px;
+    display: flex;
+}
+.recipe-list-allergy .allergy-title {
+    font-weight: bold;
+    margin-right: 15px;
+}
+.recipe-list-allergy .allergy {
+    margin-right: 5px;
 }
 

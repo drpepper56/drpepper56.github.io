@@ -4,20 +4,33 @@ import LoginRegisterPage from "./components/LoginRegisterPage";
 import ProfileCircle from "./components/ProfileCircle";
 import LeftSideMenu from "./components/LeftSideMenu";
 import RecipeDisplay from "./components/RecipeDisplay";
+import { Recipe } from "./classes/Recipe";
 
 export enum PageMode {
   "LoginRegister",
   "Home",
 }
 
-const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // actual
-// const server_address = "127.0.0.1"; // testing
+// const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // actual
+const server_address = "127.0.0.1"; // testing
 const server_port = 5000; // testing
 
 export interface User {
   name: string;
   email: string;
 }
+
+// let recipeOutputForm = new Map([
+//   ["title", title],
+//   ["preparationTime", preparationTime],
+//   ["cookingTime", cookingTime],
+//   ["numberOfServings", numberOfServings],
+//   ["flavourDescription", flavourDescription],
+//   ["allergy", allergy],
+//   ["ingArray", ingArray],
+//   ["steps", steps],
+//   ["nutrition", nutrition],
+// ]);
 
 const App: React.FC = () => {
   /*
@@ -28,7 +41,8 @@ const App: React.FC = () => {
   const [user, setUser] = useState<User | null>(null);
   // recipe holder
   // const focusRecipe = useRef(new Map([["", Object]]));
-  const [focusRecipe, setFocusRecipe] = useState(new Map([["", Object]]));
+  const [focusRecipe, setFocusRecipe] = useState<Recipe>(new Recipe());
+  const [recipeList, setRecipeList] = useState<[Recipe]>([new Recipe()]);
   const [recipeGenerated, setRecipeGenerated] = useState(false);
 
   //for login
@@ -168,7 +182,10 @@ const App: React.FC = () => {
             Notify the recipe display object that a recipe has been generated, also reset it
             Call function to pass the complete recipe to the recipe display
           */
-          setFocusRecipe(new Map(Object.entries(raw_data)));
+          let recipe = Recipe.processRecipeToOutputForm(
+            new Map(Object.entries(raw_data))
+          );
+          setFocusRecipe(recipe);
           setRecipeGenerated(true);
           resolve(raw_data);
         } else {
@@ -202,7 +219,9 @@ const App: React.FC = () => {
                 pageNavigation={triggerPageModeChange}
               />
             </div>
-            {recipeGenerated && <RecipeDisplay passedRecipe={focusRecipe} />}
+            {recipeGenerated && (
+              <RecipeDisplay passedRecipeProcessed={focusRecipe} />
+            )}
           </div>
         </>
       ) : (

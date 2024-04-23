@@ -21,8 +21,10 @@
   }
   .menu ul li p {
     margin: 0;
-    width: 100%; /* Span the entire width of the ul */
     padding: 15px 12px;
+  }
+  .menu ul li .tab-title {
+    font-weight: bold;
   }
   .menu ul li p :has {
     margin: 0;
@@ -37,20 +39,9 @@
     margin-top: 6px;
   }
 
-  /* .recipe-generate-li { 
-    background-color: #ffffff !important;
-  } */
-
   .recipe-generate-li button {
     align-self: center;
   }
   .dynamic_inputs_input_text {
     margin-bottom: 3px;
-  }
-
-  /* .menu li:has(:not(p)){
-  } */
-
-  .menu li:hover { /* Style for hovering over menu items */
-    background-color: #eee; /* Optional: Highlight on hover */
   }

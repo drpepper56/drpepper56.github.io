@@ -1,5 +1,4 @@
 .select-container {
-    font-size: 14px;
     /* font-family: 'Courier New', Courier, monospace; */
     padding-bottom: 8px;
 }
@@ -11,14 +10,14 @@
     background-color: inherit;
     user-select: none;
     outline: none;
+    display: flex;
 }
 
 .allergy-option {
     margin: 0 !important;
     padding: 0 !important;
-
+    width: fit-content;
     display: inline;
-    width: 100%;
     background-color: inherit;
     outline: none;
     border: none;
@@ -26,6 +25,7 @@
 }
 
 .option-text {
+    font-size: 13px ;
     margin: 0 !important;
     padding: 6px !important;
     margin-left: 30px !important;
@@ -38,7 +38,7 @@
     margin: 0 !important;
     padding: 0 10px !important;
     position: absolute;
-    transform: translateY(+36%);
+    transform: translateY(+20%);
     left: 5px; /* Adjust this value as needed */
     justify-content: center;
 }

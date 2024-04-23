@@ -174,7 +174,9 @@ Send https request to server to generate 3 initial recipes
   return (
     <ul>
       <li>
-        <p onClick={handleIngInputToggle}>Ingredients</p>
+        <p onClick={handleIngInputToggle} className="tab-title">
+          Ingredients
+        </p>
         {showIngInput && (
           <>
             <DynamicIngredientsInput
@@ -186,7 +188,9 @@ Send https request to server to generate 3 initial recipes
         )}
       </li>
       <li>
-        <p onClick={handleStyleInputToggle}>Style</p>
+        <p onClick={handleStyleInputToggle} className="tab-title">
+          Style
+        </p>
         {showStyleInput && (
           <>
             <DynamicIngredientsInput
@@ -198,7 +202,9 @@ Send https request to server to generate 3 initial recipes
         )}
       </li>
       <li>
-        <p onClick={handleAllergiesToggle}>Allergies</p>
+        <p onClick={handleAllergiesToggle} className="tab-title">
+          Allergies
+        </p>
         {showAllergies && (
           <>
             <SelectFromList
@@ -213,7 +219,7 @@ Send https request to server to generate 3 initial recipes
         )}
       </li>
       <li className="recipe-generate-li">
-        <p>Recipe Suggestions</p>
+        <p className="tab-title">Recipe Suggestions</p>
         {suggestions.length < suggestionsLimit ? (
           <button
             className="button-generate-suggestions"
