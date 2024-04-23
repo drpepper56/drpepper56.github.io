@@ -42,7 +42,7 @@ const App: React.FC = () => {
   // recipe holder
   // const focusRecipe = useRef(new Map([["", Object]]));
   const [focusRecipe, setFocusRecipe] = useState<Recipe>(new Recipe());
-  const [recipeList, setRecipeList] = useState<[Recipe]>([new Recipe()]);
+  // const [recipeList, setRecipeList] = useState<[Recipe]>([new Recipe()]);
   const [recipeGenerated, setRecipeGenerated] = useState(false);
 
   //for login
