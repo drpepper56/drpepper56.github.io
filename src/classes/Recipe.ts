@@ -84,7 +84,7 @@ export class Recipe {
         this.cookingTime = cookingTime ? cookingTime : 30;
         this.numberOfServings = numberOfServings ? numberOfServings : 4;
         this.flavourDescription = flavourDescription ? flavourDescription : "i can't spell";
-        this.allergy = allergy ? allergy : ['air', 'fat people'];
+        this.allergy = allergy ? allergy : ['peanuts'];
         this.ingArray = ingArray ? ingArray : [['potato', '3 medium-sized potatoes'], ['ketchup', '1/4 cup']]; 
         this.steps = steps ? steps : [['step1', 'Preheat the oven to 400°F (200°C) and line a baking sheet with parchment paper.'],
         ['step3', 'Place the diced potatoes on the prepared baking sh…salt, pepper, and any additional spices you like.'],
