@@ -20,7 +20,7 @@ export enum Allergies {
   "Peanuts",
   "Sesame",
   "Soyabeans",
-  "Sulphites",
+  "Sulphates",
   "Tree Nuts",
 }
 

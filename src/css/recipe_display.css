@@ -8,7 +8,8 @@
 
 .recipe-scrollable-list {
     overflow-y: scroll;
-    height: 50vw;
+    max-height: 70vw;
+    padding-right: 10px;
 }
 
 .recipe-paged {

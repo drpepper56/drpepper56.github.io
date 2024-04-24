@@ -15,7 +15,6 @@ export class Recipe {
     /*
         Function to process the full recipes returned from the api
     */    
-
     public static processRecipeToOutputForm(passedRecipe: Map<string, Object>) {
         console.log(passedRecipe)
         // unpack the map returned from the server
@@ -63,7 +62,6 @@ export class Recipe {
         steps,
         nutrition
         );
-        console.log('after', recipeOutputForm)
         return recipeOutputForm;
     }
 
@@ -73,7 +71,7 @@ export class Recipe {
         cookingTime?: number,
         numberOfServings?: number,
         flavourDescription?: string,
-        allergy?: [string],
+        allergy?: string[],
         ingArray?: [string, Object][],
         steps?: [string, Object][],
         nutrition?: [string, Object][],
@@ -84,7 +82,7 @@ export class Recipe {
         this.cookingTime = cookingTime ? cookingTime : 30;
         this.numberOfServings = numberOfServings ? numberOfServings : 4;
         this.flavourDescription = flavourDescription ? flavourDescription : "i can't spell";
-        this.allergy = allergy ? allergy : ['peanuts'];
+        this.allergy = allergy ? allergy : ['No Allergies'];
         this.ingArray = ingArray ? ingArray : [['potato', '3 medium-sized potatoes'], ['ketchup', '1/4 cup']]; 
         this.steps = steps ? steps : [['step1', 'Preheat the oven to 400°F (200°C) and line a baking sheet with parchment paper.'],
         ['step3', 'Place the diced potatoes on the prepared baking sh…salt, pepper, and any additional spices you like.'],
@@ -96,4 +94,34 @@ export class Recipe {
         nutrition ? this.nutrition = nutrition : null;
     }
 
+    public static fromJson(json: any): Recipe {
+        // Validate JSON structure (optional)
+        // if (!json.hasOwnProperty('title') || !json.hasOwnProperty('preparationTime') || ...) {
+        //   throw new Error('Invalid JSON format for Recipe');
+        // }
+    
+        const title = json.title as string;
+        const preparationTime = parseInt(json["preparationTime"] as string, 10);
+        const cookingTime = parseInt(json.cookingTime as string, 10);
+        const numberOfServings = parseInt(json.numberOfServings as string, 10);
+        const flavourDescription = json.flavourDescription as string;
+        const allergy = json.allergy as string[];
+
+        // Handle nested JSON for ingredients, steps, and nutrition
+        const ingArray: [string, Object][] = json.ingArray as [string, Object][];
+        const steps: [string, Object][] = json.steps as [string, Object][];
+        const nutrition: [string, Object][] = json.nutrition as [string, Object][];
+    
+        return new Recipe(
+          title,
+          preparationTime,
+          cookingTime,
+          numberOfServings,
+          flavourDescription,
+          allergy,
+          ingArray,
+          steps,
+          nutrition
+        );
+      }
 }

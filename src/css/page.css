@@ -2,21 +2,24 @@
   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-body, html, .App {
-  height: 100%; 
-  width: 100%;  
+html, body{ 
   margin: 0;    
-  padding: 0;   
+  padding: 0; 
+}
+
+body {
+  max-height: 100vw; 
+  width: 100%;  
 }
 
 .App {
-  height: 100vw;
+  height: 100%;
   display: flex;
   box-sizing: border-box;
 }
 
 .container-for-left-side {
-  height: 100%;
+  height: 100wv;
   min-width: fit-content;
   width: fit-content;
   margin:0;

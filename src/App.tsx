@@ -18,6 +18,7 @@ const server_port = 5000; // testing
 export interface User {
   name: string;
   email: string;
+  recipeList: Recipe[];
 }
 
 // let recipeOutputForm = new Map([
@@ -40,10 +41,7 @@ const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   // recipe holder
-  // const focusRecipe = useRef(new Map([["", Object]]));
-  const [focusRecipe, setFocusRecipe] = useState<Recipe>(new Recipe());
-  // const [recipeList, setRecipeList] = useState<[Recipe]>([new Recipe()]);
-  const [recipeGenerated, setRecipeGenerated] = useState(false);
+  const [recipeList, setRecipeList] = useState<Recipe[]>([new Recipe()]);
 
   //for login
   const handleLoginClick = () => {
@@ -52,6 +50,7 @@ const App: React.FC = () => {
   };
   //for setting user after login
   const handleLoginSuccess = (user: User) => {
+    setRecipeList(user.recipeList);
     setUser(user);
     setIsLoggedIn(true);
     setCurrentPageMode(PageMode.Home);
@@ -185,8 +184,7 @@ const App: React.FC = () => {
           let recipe = Recipe.processRecipeToOutputForm(
             new Map(Object.entries(raw_data))
           );
-          setFocusRecipe(recipe);
-          setRecipeGenerated(true);
+          AddRecipeToPersonalList(recipe);
           resolve(raw_data);
         } else {
           // if request unsuccessful
@@ -196,6 +194,20 @@ const App: React.FC = () => {
         }
       };
     });
+  };
+
+  /* 
+    Functions for adding and removing recipes from the user's personal list
+  */
+  const AddRecipeToPersonalList = (recipe: Recipe) => {
+    let list = recipeList;
+
+    console.info("1");
+    console.info(list);
+    list = list.concat([recipe]);
+    console.info("2");
+    console.info(list);
+    setRecipeList(list);
   };
 
   return (
@@ -219,9 +231,7 @@ const App: React.FC = () => {
                 pageNavigation={triggerPageModeChange}
               />
             </div>
-            {recipeGenerated && (
-              <RecipeDisplay passedRecipeProcessed={focusRecipe} />
-            )}
+            <RecipeDisplay passedRecipeProcessedList={recipeList} />
           </div>
         </>
       ) : (

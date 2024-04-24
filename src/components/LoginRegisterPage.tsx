@@ -4,6 +4,7 @@ import Button from "./Button";
 import "../css/login.css";
 import TriggerTextBox from "./TriggerTextBox";
 import { useOutsideClick } from "../util/useOutsideClick";
+import { Recipe } from "../classes/Recipe";
 
 interface LoginItems {
   serverPort: number;
@@ -34,10 +35,10 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   const [loginPassword, setLoginPassword] = useState("");
   const [loginErrorMessage] = useState("");
 
+  // handle change of the two login fields
   const handleLoginEmailChange = (value: string) => {
     setLoginEmail(value);
   };
-
   const handleLoginPasswordChange = (value: string) => {
     setLoginPassword(value);
   };
@@ -77,9 +78,26 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
           onLogin();
         }
 
+        // unpack the recipe list
+        // let recipeList = data["recipe_list"].map((value: string) => {
+        //   return JSON.parse(value) as Recipe;
+        // });
+
+        // json typescript black magic
+
+        let parsedRecipeList = Object.values(data["recipe_list"]).map(
+          (value) => {
+            return Recipe.fromJson(JSON.parse(value!.toString()));
+          }
+        );
+
+        // let parsedRecipe = Recipe.fromJson(JSON.parse(data["recipe_list"][0]));
+        // console.log("first", parsedRecipe);
+
         loginSuccess({
           name: data["username"],
           email: data["email"],
+          recipeList: parsedRecipeList,
         });
       } /* else {
         //TODO: fix later add proper error handling
@@ -94,6 +112,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
       password: loginPassword,
     };
     let jsonPayload = JSON.stringify(loginJSON);
+
     // console.log(jsonPayload);
     xhr.send(jsonPayload);
   };
@@ -153,6 +172,7 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
     loginSuccess({
       name: registerName,
       email: registerEmail,
+      recipeList: [new Recipe()],
     });
   };
 
