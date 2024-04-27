@@ -15,8 +15,8 @@ export enum PageMode {
   "Home",
 }
 
-const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // actual
-// const server_address = "127.0.0.1"; // testing
+// const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // actual
+const server_address = "127.0.0.1"; // testing
 const server_port = 5000; // testing
 
 export interface User {

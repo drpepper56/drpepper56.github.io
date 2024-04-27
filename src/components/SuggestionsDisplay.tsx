@@ -45,7 +45,7 @@ const SuggestionsDisplay: React.FC<SuggestionsDisplayItems> = ({
               key={"suggestion_" + index}
               onClick={() =>
                 handleGenerateFinalRecipe(
-                  componentObject.comsponentMap,
+                  componentObject.componentMap,
                   componentObject.suggestion
                 )
               }
