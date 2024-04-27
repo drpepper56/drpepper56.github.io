@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "../css/suggestions_display.css";
 import { SuggestionWithComponents } from "../classes/SuggestionWithComponents";
 
@@ -44,9 +43,9 @@ const SuggestionsDisplay: React.FC<SuggestionsDisplayItems> = ({
             <div
               className="suggestion-box"
               key={"suggestion_" + index}
-              onClick={(e) =>
+              onClick={() =>
                 handleGenerateFinalRecipe(
-                  componentObject.componentMap,
+                  componentObject.comsponentMap,
                   componentObject.suggestion
                 )
               }
