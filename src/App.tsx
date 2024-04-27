@@ -1,3 +1,6 @@
+/* eslint-disable react-refresh/only-export-components */
+/* eslint-disable no-var */
+/* eslint-disable prefer-const */
 import "./css/page.css";
 import { useState } from "react";
 import LoginRegisterPage from "./components/LoginRegisterPage";
@@ -5,6 +8,7 @@ import ProfileCircle from "./components/ProfileCircle";
 import LeftSideMenu from "./components/LeftSideMenu";
 import RecipeDisplay from "./components/RecipeDisplay";
 import { Recipe } from "./classes/Recipe";
+import { SuggestionWithComponents } from "./classes/SuggestionWithComponents";
 
 export enum PageMode {
   "LoginRegister",
@@ -21,18 +25,6 @@ export interface User {
   recipeList: Recipe[];
 }
 
-// let recipeOutputForm = new Map([
-//   ["title", title],
-//   ["preparationTime", preparationTime],
-//   ["cookingTime", cookingTime],
-//   ["numberOfServings", numberOfServings],
-//   ["flavourDescription", flavourDescription],
-//   ["allergy", allergy],
-//   ["ingArray", ingArray],
-//   ["steps", steps],
-//   ["nutrition", nutrition],
-// ]);
-
 const App: React.FC = () => {
   /*
     State and Ref variables
@@ -40,8 +32,10 @@ const App: React.FC = () => {
   const [currentPageMode, setCurrentPageMode] = useState(PageMode.Home);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  // recipe holder
+  // recipe and suggestion holder
   const [recipeList, setRecipeList] = useState<Recipe[]>([new Recipe()]);
+  const [suggestionsWithComponentsList, setSuggestionsWithComponentsList] =
+    useState<SuggestionWithComponents[]>([new SuggestionWithComponents()]);
 
   //for login
   const handleLoginClick = () => {
@@ -70,6 +64,10 @@ const App: React.FC = () => {
   const triggerPageModeChange = (pageMode: PageMode) => {
     setCurrentPageMode(pageMode);
     console.log(currentPageMode);
+  };
+  // method of clearing the suggestions list
+  const clearSuggestions = () => {
+    setSuggestionsWithComponentsList([new SuggestionWithComponents()]);
   };
 
   /*
@@ -118,8 +116,14 @@ const App: React.FC = () => {
       xhr.onload = () => {
         if (xhr.status == 200) {
           // if request  successful
-          //receive response and parse the json
-          let data = xhr.response;
+          // receive response and parse the json, turn it into an object and add the components used to generate it
+          let data_raw = xhr.response;
+          let data = new Map(Object.entries(data_raw)) as Map<string, string>;
+          let suggestions = Array.from(data).map((value) => {
+            return new SuggestionWithComponents(value[1], map);
+          });
+          // set the state of the suggestion array
+          setSuggestionsWithComponentsList(suggestions);
           // console.log("good good: ", data);
           resolve(data);
         } else {
@@ -184,7 +188,7 @@ const App: React.FC = () => {
           let recipe = Recipe.processRecipeToOutputForm(
             new Map(Object.entries(raw_data))
           );
-          AddRecipeToPersonalList(recipe);
+          addRecipeToPersonalList(recipe);
           resolve(raw_data);
         } else {
           // if request unsuccessful
@@ -199,15 +203,22 @@ const App: React.FC = () => {
   /* 
     Functions for adding and removing recipes from the user's personal list
   */
-  const AddRecipeToPersonalList = (recipe: Recipe) => {
+  const addRecipeToPersonalList = (recipe: Recipe) => {
     let list = recipeList;
-
-    console.info("1");
-    console.info(list);
     list = list.concat([recipe]);
-    console.info("2");
-    console.info(list);
     setRecipeList(list);
+  };
+  const removeRecipeFromPersonalList = (title: string) => {
+    for (let i = 0; i < recipeList.length; i++) {
+      if (recipeList[i].title == title) {
+        // remake the list without the recipe
+        let tmp = Array.from(recipeList).filter(function (e) {
+          if (e.title !== title) return e;
+        });
+        // replace the list
+        setRecipeList(tmp);
+      }
+    }
   };
 
   return (
@@ -216,7 +227,6 @@ const App: React.FC = () => {
         <>
           <LeftSideMenu
             generateInitialSuggestions={generateInitialSuggestions}
-            generateFinalRecipe={generateFinalRecipe}
           />
           <div className="container-for-right_side">
             <div className="container-for-profile-circle">
@@ -231,7 +241,13 @@ const App: React.FC = () => {
                 pageNavigation={triggerPageModeChange}
               />
             </div>
-            <RecipeDisplay passedRecipeProcessedList={recipeList} />
+            <RecipeDisplay
+              generateFinalRecipe={generateFinalRecipe}
+              passedRecipeProcessedList={recipeList}
+              removeRecipe={removeRecipeFromPersonalList}
+              suggestionsWithComponentsList={suggestionsWithComponentsList}
+              clearSuggestions={clearSuggestions}
+            />
           </div>
         </>
       ) : (

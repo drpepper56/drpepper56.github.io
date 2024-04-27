@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 import { useRef, useState } from "react";
 import "../css/left_side_menu.css";
 import RecipeControl from "./RecipeControl";
@@ -13,32 +14,26 @@ interface LeftSideMenuItems {
   generateInitialSuggestions: (
     map: Map<string, string[]>
   ) => Promise<Map<string, string>>;
-  // generate final recipe function defined in App.tsx, passed down
-  generateFinalRecipe: (
-    componentsMap: Map<string, string[]>,
-    recipeDescription: string
-  ) => Promise<Map<string, string>>;
 }
 
 const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
   generateInitialSuggestions,
-  generateFinalRecipe,
 }) => {
   // control if the menu is visible or not
-  const [showMenu, setShowMenu] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
   const handleToggleShowMenu = () => {
     setShowMenu(!showMenu);
   };
 
   // ref objects for storing maps used by this elements unmounted children
-  let promptComponentMapRef = useRef(
+  const promptComponentMapRef = useRef(
     new Map([
       ["ing", [""]],
       ["style", [""]],
       ["allergies", [""]],
     ])
   );
-  let generatedInitialSuggestions = useRef(
+  const generatedInitialSuggestions = useRef(
     new Map([
       ["rec1", ""],
       ["rec2", ""],
@@ -67,7 +62,6 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
             passedPromptComponentsMap={promptComponentMapRef.current}
             returnRefObjects={handleRecipeControlClose}
             generateInitialSuggestions={generateInitialSuggestions}
-            generateFinalRecipe={generateFinalRecipe}
           />
         </div>
       )}

@@ -1,47 +1,109 @@
+.container-for-left-side {
+  height: 70vw;
+  min-width: fit-content;
+  width: fit-content;
+  margin:0;
+  padding:0;
+  display: block;
+}
 
 .menu ul {
-    list-style: none;
-    padding: 1px;
-    margin: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-  }
+  list-style: none;
+  padding: 1px;
+  margin: 0;
+  width: 100%;
+  height: 80vh;
+  /* box-sizing: border-box; */
+  overflow-y: scroll !important;
+  overflow-x: hidden !important;
+}
   
-  .menu ul li {
-    position: relative;    
-    display: block; /* Make list items behave like block elements */
-    width: 100%; /* Span the entire width of the ul */
-    height: fit-content;
-    margin: 0;
-    padding-left: 5px;
-    /* padding: 10px 12px; */
-    border-top: 1px solid #acacac; /* Add a subtle border between items */
-    box-sizing: border-box;
-  }
-  .menu ul li p {
-    margin: 0;
-    padding: 15px 12px;
-  }
-  .menu ul li .tab-title {
-    font-weight: bold;
-  }
-  .menu ul li p :has {
-    margin: 0;
-    width: 100%; /* Span the entire width of the ul */
-    padding: 15px 12px;
-  }
+.menu ul li {
+  position: relative;    
+  display: block; /* Make list items behave like block elements */
+  width: 100%; /* Span the entire width of the ul */
+  height: fit-content;
+  margin: 0;
+  padding-left: 5px;
+  /* padding: 10px 12px; */
+  border-top: 1px solid #acacac; /* Add a subtle border between items */
+  box-sizing: border-box;
+}
+.menu ul li p {
+  margin: 0;
+  padding: 15px 12px;
+}
+.tab-title-elements {
+  display: flex;
+  align-items: center;
+}
+.tab-title {
+  font-weight: bold;
+  width: 90%;
+  cursor: pointer;
+}
+.clue-popup-image {
+  cursor: pointer;
+  margin-right: 10px;
+  max-width: 20px;
+  max-height: 20px;
+  color: white !important;
+  filter: invert(100%);
+}
+.popup-container {
+  margin: 0;
+  padding: 2px !important;
+
+  border-radius: 4px;
+  border: solid 1px black;
+  position: fixed;
+  transform: translate(23vw,0%);
+  z-index: 1;
+
+  background: rgba(255,255,255,0.7);
+  
+}
+.popup-container > p {
+  font-size: 13px;
+  color: black;
+  padding: 0 !important;
+  width: fit-content;
+  max-width: 11vw;
+}
 
 
-  .menu li p, .button-generate-suggestions {
-    cursor: pointer; /* Indicate clickable behavior */
-    margin-bottom: 6px;
-    margin-top: 6px;
-  }
+.menu ul li p {
+  margin: 0;
+  width: 100%; /* Span the entire width of the ul */
+  padding: 15px 12px;
+}
 
-  .recipe-generate-li button {
-    align-self: center;
-  }
-  .dynamic_inputs_input_text {
-    margin-bottom: 3px;
-  }
+.recipe-generate {
+  display: flex;
+  align-items: center !important;
+  border-top: 1px solid #acacac !important;
+}
+.recipe-generate .button-generate-suggestions {
+  cursor: pointer;
+
+  margin-bottom: 6px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right: auto;
+
+  /* width: 70%; */
+
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.entry .button-remove-entry {
+  align-self: center;
+  position: relative;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.dynamic_inputs_input_text {
+  margin-bottom: 3px;
+}
+

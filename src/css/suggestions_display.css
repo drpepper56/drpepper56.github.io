@@ -1,0 +1,27 @@
+.suggestions-display {
+    display: flex;
+    height: fit-content;
+    padding: 0px 10px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+.suggestion-box {
+    cursor: pointer;
+    background-color: #cdcdff;
+    border-radius: 20px;
+    border: solid 1px #232342;
+    width: 100%;
+    height: fit-content;
+    margin: 0px 15px;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    box-sizing: border-box;
+}
+.suggestion-box:hover{
+    background-color: #9A9ACC;
+}
+.suggestion {
+    width: 100%;
+    text-align: center;
+    margin: 0, 10px !important;
+}

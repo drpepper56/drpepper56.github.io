@@ -1,5 +1,6 @@
 .recipe-display {
     padding: 10px 10px;
+    max-width: 100%;
 }
 
 .recipe-output-container {
@@ -33,17 +34,34 @@ li {
     padding: 9px 0px;
 }
 li p {
-font-size: 17px;
-padding: 0;
-margin: 0;
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
+}
+li div {
+    font-size: 17px;
+    padding: 0;
+    margin: 0;
 }
 
 /*  li and their p  */
 .recipe-list-title {
     font-size: 14px;
     font-weight: bold;
+    display: flex;
+    min-width: 50%;
 }
-
+.recipe-list-title .recipe-title{
+    width: 100%;
+}
+.recipe-list-title .close-circle {
+    position: relative;
+    width: 30px; 
+    height: 30px; 
+    cursor: pointer;
+    bottom: 10px;
+    left: 10px;
+}
 
 .recipe-list-time-servings {
     justify-content: center;
@@ -109,7 +127,13 @@ margin: 0;
     font-weight: bold;
     margin-right: 15px;
 }
+.recipe-list-allergy .right-side-allergy-box {
+    font-size: 14px;
+    display: flex;
+    flex-wrap: wrap;
+}
 .recipe-list-allergy .allergy {
     margin-right: 5px;
+    max-width: fit;
 }
 

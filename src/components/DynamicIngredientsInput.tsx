@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable prefer-const */
 import { useEffect, useState } from "react";
 /*
       Element to dynamically generate more text input rows as needed
@@ -65,8 +67,8 @@ Handle the change of all input text boxes, when the last one is occupied by some
       {/* render everything from the inputs state as a div>label,input */}
       {inputs.map((input, index) => {
         return (
-          <div key={"div".concat(index.toString())}>
-            <label>
+          <div key={"div".concat(index.toString())} className="entry">
+            <label className="label-entry">
               {label} {index + 1}{" "}
             </label>
             <input
@@ -82,9 +84,12 @@ Handle the change of all input text boxes, when the last one is occupied by some
               (index > 0 || inputs.length > 0) &&
                 (index < inputs.length - 1 ||
                   (index == 1 && inputs.length !== 2)) && (
-                  <>
-                    <button onClick={() => handleRemoveInput(index)}>X</button>
-                  </>
+                  <button
+                    className="button-remove-entry"
+                    onClick={() => handleRemoveInput(index)}
+                  >
+                    X
+                  </button>
                 )
             }
           </div>

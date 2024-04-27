@@ -4,18 +4,21 @@
     of using a state variable for every input value, in the 'submit' function the each value is taken from it's respective text box
     or however else the value is obtained (slider or checkbox)
 */
+
 import { useEffect, useRef, useState } from "react";
 import DynamicIngredientsInput from "./DynamicIngredientsInput";
 import SelectFromList from "./SelectFromList";
 import "../css/recipe_control.css";
+// question mark by Nira Inds from <a href="https://thenounproject.com/browse/icons/term/question-mark/" target="_blank" title="question mark Icons">Noun Project</a> (CC BY 3.0)
+import question_mark from "../assets/question_mark.png";
 
 // from allergyuk.org
 export enum Allergies {
   "Celery",
-  "Gluten Cereals",
+  "Gluten",
   "Eggs",
   "Seafood",
-  "Milk",
+  "Lactose",
   "Mustard",
   "Peanuts",
   "Sesame",
@@ -38,11 +41,6 @@ interface RecipeControlItems {
   generateInitialSuggestions: (
     map: Map<string, string[]>
   ) => Promise<Map<string, string>>;
-  // FUNction to generate a full recipe, given a pre-generated suggestion and the components that went into that suggestions
-  generateFinalRecipe: (
-    componentsMap: Map<string, string[]>,
-    recipeDescription: string
-  ) => Promise<Map<string, string>>;
 }
 
 const RecipeControl: React.FC<RecipeControlItems> = ({
@@ -50,7 +48,6 @@ const RecipeControl: React.FC<RecipeControlItems> = ({
   passedGeneratedRecipesMap,
   returnRefObjects,
   generateInitialSuggestions,
-  generateFinalRecipe,
 }) => {
   //store the prompt components locally as a ref to not rerender everything
   const promptComponentMapRef = useRef(passedPromptComponentsMap);
@@ -60,7 +57,6 @@ const RecipeControl: React.FC<RecipeControlItems> = ({
   const [showIngInput, setShowIngInput] = useState(false);
   const [showStyleInput, setShowStyleInput] = useState(false);
   const [showAllergies, setShowAllergies] = useState(false);
-  const [suggestionsGenerated, setSuggestionsGenerated] = useState(false);
   // values for displaying and updating the suggestions locally
   const [suggestions, setSuggestion] = useState([""]);
   const suggestionsLimit = 9;
@@ -119,15 +115,11 @@ Saving their inputs and passing them when opened again
   };
   // suggestions (output)
   const suggestionsGeneratedComplete = () => {
-    setSuggestionsGenerated(true);
     // add the new suggestions in front of the old ones
     setSuggestion(
       [...recipeSuggestionsMapRef.current.values()].concat(suggestions)
     );
     console.info(suggestions);
-  };
-  const clearSuggestions = () => {
-    setSuggestion([""]);
   };
 
   /*
@@ -153,110 +145,119 @@ Send https request to server to generate 3 initial recipes
     }
   };
 
-  const handleGenerateFinalRecipe = (
-    recipeComponents: Map<string, string[]>,
-    recipeDescription: string
-  ) => {
-    // call the function that connects to the server
-    generateFinalRecipe(recipeComponents, recipeDescription)
-      .then((raw_data) => {
-        //return the recipe suggestions in text form
-        // let tmp = new Map(Object.entries(raw_data));
-        console.log(raw_data);
-        setSuggestion([""]);
-      })
-      .catch((data) => {
-        // log the error
-        console.log("error", data);
-      });
+  /*
+Handle the user hovering over the question mark help image and toggle a helping popup
+  */
+  const handleShowPopup = (text: string, target: HTMLImageElement) => {
+    const popup = document.createElement("div");
+    popup.className = "popup-container";
+    const hint_p = document.createElement("p");
+    // hint_p.className = "popup-container-hint";
+    hint_p.textContent = text;
+    popup.appendChild(hint_p);
+
+    console.log(text);
+
+    if (target.parentElement!.querySelector(".popup-container") == null) {
+      target.parentElement?.appendChild(popup);
+    } else {
+      target.parentElement!.removeChild(target.parentElement!.lastChild!);
+    }
   };
 
   return (
-    <ul>
-      <li>
-        <p onClick={handleIngInputToggle} className="tab-title">
-          Ingredients
-        </p>
-        {showIngInput && (
-          <>
-            <DynamicIngredientsInput
-              label=""
-              values={getIngredientsValues()}
-              returnValues={handleIngredientsTabClose}
+    <>
+      <ul>
+        <li>
+          <div className="tab-title-elements">
+            <p onClick={handleIngInputToggle} className="tab-title">
+              Ingredients
+            </p>
+            <img
+              className="clue-popup-image"
+              src={question_mark}
+              onClick={(e) =>
+                handleShowPopup(
+                  "Add any ingredients you want to use in the recipe. e.g. Flour, Pasta, Milk, Pepper, Rice etc",
+                  e.currentTarget
+                )
+              }
             />
-          </>
-        )}
-      </li>
-      <li>
-        <p onClick={handleStyleInputToggle} className="tab-title">
-          Style
-        </p>
-        {showStyleInput && (
-          <>
-            <DynamicIngredientsInput
-              label="Custom Style"
-              values={getStyleValues()}
-              returnValues={handleStyleTabClose}
+          </div>
+          {showIngInput && (
+            <>
+              <DynamicIngredientsInput
+                label=""
+                values={getIngredientsValues()}
+                returnValues={handleIngredientsTabClose}
+              />
+            </>
+          )}
+        </li>
+        <li>
+          <div className="tab-title-elements">
+            <p onClick={handleStyleInputToggle} className="tab-title">
+              Style
+            </p>
+            <img
+              className="clue-popup-image"
+              src={question_mark}
+              onClick={(e) =>
+                handleShowPopup(
+                  "Specify the style, e.g. desert, oven baked, korean, reduced fat, italian",
+                  e.currentTarget
+                )
+              }
             />
-          </>
-        )}
-      </li>
-      <li>
-        <p onClick={handleAllergiesToggle} className="tab-title">
-          Allergies
-        </p>
-        {showAllergies && (
-          <>
-            <SelectFromList
-              values={getAllergiesValues()}
-              allAllergies={Object.entries(Allergies)
-                .filter((e) => !isNaN(e[0] as any))
-                .map((e) => e[1])}
-              returnValues={handleAllergiesTabClose}
-              label="allergy"
+          </div>
+          {showStyleInput && (
+            <>
+              <DynamicIngredientsInput
+                label=""
+                values={getStyleValues()}
+                returnValues={handleStyleTabClose}
+              />
+            </>
+          )}
+        </li>
+        <li>
+          <div className="tab-title-elements">
+            <p onClick={handleAllergiesToggle} className="tab-title">
+              Allergies
+            </p>
+            <img
+              className="clue-popup-image"
+              src={question_mark}
+              onClick={(e) =>
+                handleShowPopup("Check your allergies.", e.currentTarget)
+              }
             />
-          </>
-        )}
-      </li>
-      <li className="recipe-generate-li">
-        <p className="tab-title">Recipe Suggestions</p>
-        {suggestions.length < suggestionsLimit ? (
-          <button
-            className="button-generate-suggestions"
-            onClick={() =>
-              handleGenerateInitialSuggestions(promptComponentMapRef.current)
-            }
-          >
-            Generate
-          </button>
-        ) : (
-          <button onClick={clearSuggestions}>Clear</button>
-        )}
-
-        {
-          //TODO: add some way of this <p> saving what went into making it component wise
-          suggestionsGenerated && (
-            <div className="suggestions-display">
-              <ul>
-                {suggestions.map((value, key) => (
-                  <li
-                    key={key}
-                    onClick={() =>
-                      handleGenerateFinalRecipe(
-                        promptComponentMapRef.current,
-                        value
-                      )
-                    }
-                  >
-                    {value}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )
-        }
-      </li>
-    </ul>
+          </div>
+          {showAllergies && (
+            <>
+              <SelectFromList
+                values={getAllergiesValues()}
+                allAllergies={Object.entries(Allergies)
+                  .filter((e) => !isNaN(e[0] as any))
+                  .map((e) => e[1])}
+                returnValues={handleAllergiesTabClose}
+                label="allergy"
+              />
+            </>
+          )}
+        </li>
+      </ul>
+      <footer className="recipe-generate">
+        <button
+          className="button-generate-suggestions"
+          onClick={() =>
+            handleGenerateInitialSuggestions(promptComponentMapRef.current)
+          }
+        >
+          Generate Recipe Suggestions
+        </button>
+      </footer>
+    </>
   );
 };
 

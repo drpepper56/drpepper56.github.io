@@ -16,7 +16,6 @@ export class Recipe {
         Function to process the full recipes returned from the api
     */    
     public static processRecipeToOutputForm(passedRecipe: Map<string, Object>) {
-        console.log(passedRecipe)
         // unpack the map returned from the server
 
         let title = passedRecipe.get("title")!.toString();
@@ -30,7 +29,8 @@ export class Recipe {
         let flavourDescription = passedRecipe
         .get("flavour_description")!
         .toString();
-        let allergy = passedRecipe.get("allergy") as [string];
+        console.log('IN THE OBJECT CALLABLE', passedRecipe.get("allergy"))
+        let allergy = passedRecipe.get("allergy") as string[];
 
         // unpack ingredients
         let ingArray = Array.from(
@@ -85,8 +85,8 @@ export class Recipe {
         this.allergy = allergy ? allergy : ['No Allergies'];
         this.ingArray = ingArray ? ingArray : [['potato', '3 medium-sized potatoes'], ['ketchup', '1/4 cup']]; 
         this.steps = steps ? steps : [['step1', 'Preheat the oven to 400°F (200°C) and line a baking sheet with parchment paper.'],
-        ['step3', 'Place the diced potatoes on the prepared baking sh…salt, pepper, and any additional spices you like.'],
         ['step2', 'Peel and dice the potatoes into small cubes.'],
+        ['step3', 'Place the diced potatoes on the prepared baking sh…salt, pepper, and any additional spices you like.'],
         ['step4', 'Bake in the oven for 25-30 minutes or until the potatoes are golden brown and crispy.'],
         ['step5', 'Warm up the tortillas in a dry skillet or in the oven.'],
         ['step6', 'Fill each tortilla with the roasted potatoes and drizzle with ketchup.'],
