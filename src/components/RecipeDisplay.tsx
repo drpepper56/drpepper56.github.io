@@ -2,6 +2,7 @@
 
 /* 
   The recipe json object/map is passed here and then each entry/key is mapped manually to a li object
+  also suggestions shown here
 */
 
 // cancel by Blair Adams from <a href="https://thenounproject.com/browse/icons/term/cancel/" target="_blank" title="cancel Icons">Noun Project</a> (CC BY 3.0)
@@ -23,7 +24,7 @@ interface RecipeDisplayItems {
     componentsMap: Map<string, string[]>,
     recipeDescription: string
   ) => Promise<Map<string, string>>;
-  // function to call to clear the suggestions from memory
+  // function to call to clear the suggestions from memory, used after generating a full recipe from them
   clearSuggestions: () => void;
 }
 const RecipeDisplay: React.FC<RecipeDisplayItems> = ({
@@ -49,7 +50,6 @@ const RecipeDisplay: React.FC<RecipeDisplayItems> = ({
     Load the array that holds every recipe to output and reverse it to show the most recent recipes on top
   */
   let reverseList = [] as Recipe[];
-
   for (let i = passedRecipeProcessedList.length - 1; i >= 0; i--) {
     reverseList.push(passedRecipeProcessedList[i]);
   }

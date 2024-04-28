@@ -1,6 +1,3 @@
-/* eslint-disable react-refresh/only-export-components */
-/* eslint-disable no-var */
-/* eslint-disable prefer-const */
 import "./css/page.css";
 import { useState } from "react";
 import LoginRegisterPage from "./components/LoginRegisterPage";
@@ -15,9 +12,12 @@ export enum PageMode {
   "Home",
 }
 
-const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // actual
-// const server_address = "127.0.0.1"; // testing
-const server_port = 5000; // testing
+/*
+  TODO: change between server on cloud and local, floating island is local
+*/
+// const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // cloud
+const server_address = "127.0.0.1"; // local
+const server_port = 5000; // for local
 
 export interface User {
   name: string;
@@ -36,6 +36,8 @@ const App: React.FC = () => {
   const [recipeList, setRecipeList] = useState<Recipe[]>([new Recipe()]);
   const [suggestionsWithComponentsList, setSuggestionsWithComponentsList] =
     useState<SuggestionWithComponents[]>([new SuggestionWithComponents()]);
+  // state for loading something
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   //for login
   const handleLoginClick = () => {
@@ -79,6 +81,7 @@ const App: React.FC = () => {
   const generateInitialSuggestions = (
     map: Map<string, string[]>
   ): Promise<Map<string, string>> => {
+    setIsLoading(true);
     return new Promise((resolve, reject) => {
       // do some checks on the prompt components to filter out non-sensible stuff
 
@@ -124,6 +127,7 @@ const App: React.FC = () => {
           });
           // set the state of the suggestion array
           setSuggestionsWithComponentsList(suggestions);
+          setIsLoading(false);
           // console.log("good good: ", data);
           resolve(data);
         } else {
@@ -131,6 +135,7 @@ const App: React.FC = () => {
           // probably error message in there
           let data = xhr.response;
           console.info(data);
+          setIsLoading(false);
           reject(data);
         }
       };
@@ -142,6 +147,7 @@ const App: React.FC = () => {
     componentMap: Map<string, string[]>,
     recipeDescription: string
   ): Promise<Map<string, string>> => {
+    setIsLoading(true);
     return new Promise((resolve, reject) => {
       // do some checks on the prompt components to filter out non-sensible stuff
 
@@ -189,11 +195,13 @@ const App: React.FC = () => {
             new Map(Object.entries(raw_data))
           );
           addRecipeToPersonalList(recipe);
+          setIsLoading(false);
           resolve(raw_data);
         } else {
           // if request unsuccessful
           // probably error message in there
           console.info(raw_data);
+          setIsLoading(false);
           reject(raw_data);
         }
       };
@@ -202,6 +210,7 @@ const App: React.FC = () => {
 
   /* 
     Functions for adding and removing recipes from the user's personal list
+    saves only for a login session
   */
   const addRecipeToPersonalList = (recipe: Recipe) => {
     let list = recipeList;
@@ -230,6 +239,15 @@ const App: React.FC = () => {
           />
           <div className="container-for-right_side">
             <div className="container-for-profile-circle">
+              <div className="loading-display-container">
+                {isLoading && (
+                  <>
+                    <p className="loading-status">Loading</p>
+                    {/* animation from: https://loading.io/css/ */}
+                    <div className="lds-dual-ring"></div>
+                  </>
+                )}
+              </div>
               <ProfileCircle
                 letter={
                   isLoggedIn && user != null

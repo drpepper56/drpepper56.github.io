@@ -1,11 +1,12 @@
-/* eslint-disable prefer-const */
 import { useRef, useState } from "react";
 import "../css/left_side_menu.css";
 import RecipeControl from "./RecipeControl";
+// menu by Adrien Coquet from <a href="https://thenounproject.com/browse/icons/term/menu/" target="_blank" title="menu Icons">Noun Project</a> (CC BY 3.0)
+import menu from "../assets/menu.png";
 
 /*
   Element for handling all of the left side closable menu which holds the input forms for recipe components
-  And triggering the generation functions, this element is only unmounted when a user logs out so it holds variables
+  And triggering the generation function for suggestion, this element is only unmounted when a user logs out so it holds variables
   for all of its children when they are unmounted
 */
 
@@ -24,7 +25,6 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
   const handleToggleShowMenu = () => {
     setShowMenu(!showMenu);
   };
-
   // ref objects for storing maps used by this elements unmounted children
   const promptComponentMapRef = useRef(
     new Map([
@@ -33,23 +33,14 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
       ["allergies", [""]],
     ])
   );
-  const generatedInitialSuggestions = useRef(
-    new Map([
-      ["rec1", ""],
-      ["rec2", ""],
-      ["rec3", ""],
-    ])
-  );
 
   /*
   Pass this to the children elements to save what they pass in this function for when they are unmounted
   */
   const handleRecipeControlClose = (
-    promptComponents: Map<string, string[]>,
-    generatedSuggestions: Map<string, string>
+    promptComponents: Map<string, string[]>
   ) => {
     promptComponentMapRef.current = promptComponents;
-    generatedInitialSuggestions.current = generatedSuggestions;
   };
 
   return (
@@ -58,7 +49,6 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
         <div className="menu">
           <div className="empty_space_in_my_head"></div>
           <RecipeControl
-            passedGeneratedRecipesMap={generatedInitialSuggestions.current}
             passedPromptComponentsMap={promptComponentMapRef.current}
             returnRefObjects={handleRecipeControlClose}
             generateInitialSuggestions={generateInitialSuggestions}
@@ -66,10 +56,7 @@ const LeftSideMenu: React.FC<LeftSideMenuItems> = ({
         </div>
       )}
       <div className="image_icon" onClick={handleToggleShowMenu}>
-        <p /*image, placeholder for now, fork knife spoon three lines menu idea*/
-        >
-          EE
-        </p>
+        <img className="menu_toggle_image" src={menu} />
       </div>
     </div>
   );

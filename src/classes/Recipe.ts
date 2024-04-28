@@ -29,7 +29,6 @@ export class Recipe {
         let flavourDescription = passedRecipe
         .get("flavour_description")!
         .toString();
-        console.log('IN THE OBJECT CALLABLE', passedRecipe.get("allergy"))
         let allergy = passedRecipe.get("allergy") as string[];
 
         // unpack ingredients
@@ -77,28 +76,24 @@ export class Recipe {
         nutrition?: [string, Object][],
     ) {
         // assignments with some defaults
-        this.title = title ? title : 'polish caserole';
+        this.title = title ? title : 'Sesame Soy Sauce Noodles with Stir-Fried Vegetables';
         this.preparationTime = preparationTime ? preparationTime : 15;
-        this.cookingTime = cookingTime ? cookingTime : 30;
+        this.cookingTime = cookingTime ? cookingTime : 20;
         this.numberOfServings = numberOfServings ? numberOfServings : 4;
-        this.flavourDescription = flavourDescription ? flavourDescription : "i can't spell";
-        this.allergy = allergy ? allergy : ['No Allergies'];
-        this.ingArray = ingArray ? ingArray : [['potato', '3 medium-sized potatoes'], ['ketchup', '1/4 cup']]; 
-        this.steps = steps ? steps : [['step1', 'Preheat the oven to 400°F (200°C) and line a baking sheet with parchment paper.'],
-        ['step2', 'Peel and dice the potatoes into small cubes.'],
-        ['step3', 'Place the diced potatoes on the prepared baking sh…salt, pepper, and any additional spices you like.'],
-        ['step4', 'Bake in the oven for 25-30 minutes or until the potatoes are golden brown and crispy.'],
-        ['step5', 'Warm up the tortillas in a dry skillet or in the oven.'],
-        ['step6', 'Fill each tortilla with the roasted potatoes and drizzle with ketchup.'],
-        ['step7', 'Serve the tacos hot and enjoy!']];
-        nutrition ? this.nutrition = nutrition : null;
+        this.flavourDescription = flavourDescription ? flavourDescription : "This dish is a delicious Thai-inspired creation that combines the nutty flavor of sesame oil with the savory taste of soy sauce, all tossed together with tender noodles and vibrant stir-fried vegetables.";
+        this.allergy = allergy ? allergy : ['rice: Gluten', 'sesame oil: Sesame', 'soy sauce: Soyabeans', 'sesame seeds: Sesame'];
+        this.ingArray = ingArray ? ingArray : [['rice', '2 cups'], ['sesame oil', '2 tbsp'], ['soy sauce', '3 tbsp'], 
+        ['sesame seeds', '1 tbsp'], ['green beans', '1 cup'], ['soy sauce', '3 tbsp'], ['carrots', '2'], ['broccoli', '3']]; 
+        this.steps = steps ? steps : [['step1', 'Cook rice according to package instructions. In a small bowl, combine soy sauce and sesame oil.'],
+        ['step2', 'Heat a large pan over medium heat. Add sesame seeds and toast until golden brown. Remove from pan.'],
+        ['step3', 'Add carrots, green beans, and broccoli to the pan. Stir-fry until vegetables are tender.'],
+        ['step4', 'Add cooked rice and sauce mixture to the pan. Toss to combine.'],
+        ['step5', 'Serve hot, garnished with toasted sesame seeds.']];
+        this.nutrition = nutrition ? nutrition : [["energy", "400kcal"], ["fat", " 12g"], ["carbohydrates", " 68g"], ["protein", " 10g"], ["salt", " 1g"]];
     }
 
     public static fromJson(json: any): Recipe {
-        // Validate JSON structure (optional)
-        // if (!json.hasOwnProperty('title') || !json.hasOwnProperty('preparationTime') || ...) {
-        //   throw new Error('Invalid JSON format for Recipe');
-        // }
+        // this static function works with what the server returns after calling the generate full recipe call
     
         const title = json.title as string;
         const preparationTime = parseInt(json["preparationTime"] as string, 10);
@@ -107,11 +102,12 @@ export class Recipe {
         const flavourDescription = json.flavourDescription as string;
         const allergy = json.allergy as string[];
 
-        // Handle nested JSON for ingredients, steps, and nutrition
+        // unpack more complex attributes
         const ingArray: [string, Object][] = json.ingArray as [string, Object][];
         const steps: [string, Object][] = json.steps as [string, Object][];
         const nutrition: [string, Object][] = json.nutrition as [string, Object][];
     
+        // return new object
         return new Recipe(
           title,
           preparationTime,

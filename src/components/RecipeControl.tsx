@@ -27,16 +27,11 @@ export enum Allergies {
   "Tree Nuts",
 }
 
-// prompts for saving the state of inputs while this element is unmounted
 interface RecipeControlItems {
   // two items for getting back the ref objects when mounting anew
   passedPromptComponentsMap: Map<string, string[]>;
-  passedGeneratedRecipesMap: Map<string, string>;
   // function for passing the ref objects to children elements when they are remounted
-  returnRefObjects: (
-    promptComponents: Map<string, string[]>,
-    generatedRecipes: Map<string, string>
-  ) => void;
+  returnRefObjects: (promptComponents: Map<string, string[]>) => void;
   // generate initial suggestion function implemented in App.tsx, passed down
   generateInitialSuggestions: (
     map: Map<string, string[]>
@@ -45,21 +40,16 @@ interface RecipeControlItems {
 
 const RecipeControl: React.FC<RecipeControlItems> = ({
   passedPromptComponentsMap,
-  passedGeneratedRecipesMap,
   returnRefObjects,
   generateInitialSuggestions,
 }) => {
   //store the prompt components locally as a ref to not rerender everything
   const promptComponentMapRef = useRef(passedPromptComponentsMap);
-  const recipeSuggestionsMapRef = useRef(passedGeneratedRecipesMap);
 
   // values for contorting the visibility of collapsible input and suggestion sections
   const [showIngInput, setShowIngInput] = useState(false);
   const [showStyleInput, setShowStyleInput] = useState(false);
   const [showAllergies, setShowAllergies] = useState(false);
-  // values for displaying and updating the suggestions locally
-  const [suggestions, setSuggestion] = useState([""]);
-  const suggestionsLimit = 9;
 
   /*
 Cleanup and setup function
@@ -69,12 +59,7 @@ On unmount run the passed function the map ref the inputs
   useEffect(() => {
     promptComponentMapRef.current = passedPromptComponentsMap;
     return () => {};
-  }, [
-    returnRefObjects(
-      promptComponentMapRef.current,
-      recipeSuggestionsMapRef.current
-    ),
-  ]);
+  }, [returnRefObjects(promptComponentMapRef.current)]);
 
   /*
 Handle toggling of list items to reveal their content
@@ -113,14 +98,6 @@ Saving their inputs and passing them when opened again
   const getAllergiesValues = () => {
     return promptComponentMapRef.current.get("allergies")!;
   };
-  // suggestions (output)
-  const suggestionsGeneratedComplete = () => {
-    // add the new suggestions in front of the old ones
-    setSuggestion(
-      [...recipeSuggestionsMapRef.current.values()].concat(suggestions)
-    );
-    console.info(suggestions);
-  };
 
   /*
 Handle generating @{3} initial recipe suggestions
@@ -129,20 +106,11 @@ Send https request to server to generate 3 initial recipes
   const handleGenerateInitialSuggestions = (
     promptComponents: Map<string, string[]>
   ) => {
-    // suggestions limit check
-    if (!(suggestions.length >= suggestionsLimit)) {
-      // call the function that connects to the server
-      generateInitialSuggestions(promptComponents)
-        .then((raw_data) => {
-          //return the recipe suggestions in text form
-          recipeSuggestionsMapRef.current = new Map(Object.entries(raw_data));
-          suggestionsGeneratedComplete();
-        })
-        .catch((data) => {
-          // log the error
-          console.log("error", data);
-        });
-    }
+    // call the function that connects to the server
+    generateInitialSuggestions(promptComponents).catch((data) => {
+      // log the error
+      console.log("error", data);
+    });
   };
 
   /*
@@ -247,7 +215,7 @@ Handle the user hovering over the question mark help image and toggle a helping 
           )}
         </li>
       </ul>
-      <footer className="recipe-generate">
+      <div className="recipe-generate">
         <button
           className="button-generate-suggestions"
           onClick={() =>
@@ -256,7 +224,7 @@ Handle the user hovering over the question mark help image and toggle a helping 
         >
           Generate Recipe Suggestions
         </button>
-      </footer>
+      </div>
     </>
   );
 };

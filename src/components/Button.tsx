@@ -1,4 +1,4 @@
-//creates a button that can be called whenever one needs to be created
+//creates a button, used in login
 interface ButtonProps {
   onClick: () => void;
   label: string;

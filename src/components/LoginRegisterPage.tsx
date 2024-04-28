@@ -1,6 +1,11 @@
+/*
+! Login functionality, all of this is a very crude implementation, the register doesn't actually create an account on the server but it does allow you
+! to access the rest of the functions if you pass a valid email ending in @gmail.com
+*/
+
 import React, { useState } from "react";
 import { User } from "../App";
-import Button from "./Button";
+import Button from "./Button.tsx";
 import "../css/login.css";
 import TriggerTextBox from "./TriggerTextBox";
 import { useOutsideClick } from "../util/useOutsideClick";
@@ -181,57 +186,59 @@ const LoginRegisterPage: React.FC<LoginItems> = ({
   };
 
   return (
-    <div className="login-container" ref={ref1}>
-      {showRegister ? (
-        <div>
-          <TriggerTextBox
-            label="Name"
-            value={registerName}
-            onChange={handleRegistrationNameChange}
-          />
-          <TriggerTextBox
-            label="Email"
-            value={registerEmail}
-            onChange={handleRegistrationEmailChange}
-          />
-          <TriggerTextBox
-            label="Password"
-            value={registerPassword}
-            onChange={handleRegistrationPasswordChange}
-            isPassword
-          />
-          <TriggerTextBox
-            label="Confirm Password"
-            value={registerConfirmPassword}
-            onChange={handleRegistrationConfirmPasswordChange}
-            isPassword
-          />
-          {registerErrorMessage && (
-            <div className="error">{registerErrorMessage}</div>
-          )}
-          <Button label="Register" onClick={handleRegisterClick} />
-          <Button label="Login" onClick={handleRegisterFormCancel} />
-        </div>
-      ) : (
-        <div>
-          <TriggerTextBox
-            label="Email"
-            value={loginEmail}
-            onChange={handleLoginEmailChange}
-          />
-          <TriggerTextBox
-            label="Password"
-            value={loginPassword}
-            onChange={handleLoginPasswordChange}
-            isPassword
-          />
-          {loginErrorMessage && (
-            <div className="error">{loginErrorMessage}</div>
-          )}
-          <Button label="Login" onClick={handleLoginClick} />
-          <Button label="Register" onClick={handleRegisterFormClick} />
-        </div>
-      )}
+    <div className="nice-background-image">
+      <div className="login-container" ref={ref1}>
+        {showRegister ? (
+          <div>
+            <TriggerTextBox
+              label="Name"
+              value={registerName}
+              onChange={handleRegistrationNameChange}
+            />
+            <TriggerTextBox
+              label="Email"
+              value={registerEmail}
+              onChange={handleRegistrationEmailChange}
+            />
+            <TriggerTextBox
+              label="Password"
+              value={registerPassword}
+              onChange={handleRegistrationPasswordChange}
+              isPassword
+            />
+            <TriggerTextBox
+              label="Confirm Password"
+              value={registerConfirmPassword}
+              onChange={handleRegistrationConfirmPasswordChange}
+              isPassword
+            />
+            {registerErrorMessage && (
+              <div className="error">{registerErrorMessage}</div>
+            )}
+            <Button label="Register" onClick={handleRegisterClick} />
+            <Button label="Login" onClick={handleRegisterFormCancel} />
+          </div>
+        ) : (
+          <div>
+            <TriggerTextBox
+              label="Email"
+              value={loginEmail}
+              onChange={handleLoginEmailChange}
+            />
+            <TriggerTextBox
+              label="Password"
+              value={loginPassword}
+              onChange={handleLoginPasswordChange}
+              isPassword
+            />
+            {loginErrorMessage && (
+              <div className="error">{loginErrorMessage}</div>
+            )}
+            <Button label="Login" onClick={handleLoginClick} />
+            <Button label="Register" onClick={handleRegisterFormClick} />
+          </div>
+        )}
+      </div>
     </div>
   );
 };

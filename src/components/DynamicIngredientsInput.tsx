@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable prefer-const */
 import { useEffect, useState } from "react";
 /*
       Element to dynamically generate more text input rows as needed
@@ -7,8 +5,11 @@ import { useEffect, useState } from "react";
 
 // prompts for saving the state of inputs while this element is unmounted
 interface DynamicIngredientsInputItems {
+  // values saved by the parent after this component was unmounted
   values: string[];
+  // function for the parent to save the component
   returnValues: (values: string[]) => void;
+  // label to indicate what this component is for
   label: string;
 }
 
