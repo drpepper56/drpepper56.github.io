@@ -15,8 +15,8 @@ export enum PageMode {
 /*
   TODO: change between server on cloud and local, floating island is local
 */
-// const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // cloud
-const server_address = "127.0.0.1"; // local
+const server_address = "floating-island-38755-1b0593cccb18.herokuapp.com"; // cloud
+// const server_address = "127.0.0.1"; // local
 const server_port = 5000; // for local
 
 export interface User {
