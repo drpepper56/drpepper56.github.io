@@ -30,7 +30,7 @@ const App: React.FC = () => {
     State and Ref variables
   */
   const [currentPageMode, setCurrentPageMode] = useState(PageMode.Home);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const [user, setUser] = useState<User | null>(null);
   // recipe and suggestion holder
   const [recipeList, setRecipeList] = useState<Recipe[]>([new Recipe()]);
@@ -134,7 +134,6 @@ const App: React.FC = () => {
           // if request unsuccessful
           // probably error message in there
           let data = xhr.response;
-          console.info(data);
           setIsLoading(false);
           reject(data);
         }
