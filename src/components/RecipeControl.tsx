@@ -46,10 +46,10 @@ const RecipeControl: React.FC<RecipeControlItems> = ({
   //store the prompt components locally as a ref to not rerender everything
   const promptComponentMapRef = useRef(passedPromptComponentsMap);
 
-  // values for contorting the visibility of collapsible input and suggestion sections
-  const [showIngInput, setShowIngInput] = useState(false);
-  const [showStyleInput, setShowStyleInput] = useState(false);
-  const [showAllergies, setShowAllergies] = useState(false);
+  // values for contorting the visibility of collapsible input and suggestion sections, set to show by default (the user has to press them anyway)
+  const [showIngInput, setShowIngInput] = useState(true);
+  const [showStyleInput, setShowStyleInput] = useState(true);
+  const [showAllergies, setShowAllergies] = useState(true);
 
   /*
 Cleanup and setup function
